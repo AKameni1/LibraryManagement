@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Drawing;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,29 +26,34 @@ namespace LibraryManagementApp
 
         private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
-            if (TogglePasswordVisibility.IsChecked == true)
+            var EyeIcon = TogglePasswordVisibility.Template.FindName("EyeIcon", TogglePasswordVisibility) as PackIconMaterial;
+
+            if (EyeIcon != null) 
             {
-                // Change l'icône pour afficher le mot de passe
-                EyeIcon.Kind = PackIconMaterialKind.Eye;
+                if (TogglePasswordVisibility.IsChecked == true)
+                {
+                    // Change l'icône pour afficher le mot de passe
+                    EyeIcon.Kind = PackIconMaterialKind.Eye;
 
-                // Affiche le mot de passe en clair et masque le PasswordBox
-                PasswordTextBox.Visibility = Visibility.Visible;
-                PasswordBox.Visibility = Visibility.Collapsed;
+                    // Affiche le mot de passe en clair et masque le PasswordBox
+                    PasswordTextBox.Visibility = Visibility.Visible;
+                    PasswordBox.Visibility = Visibility.Collapsed;
 
-                // Copie le mot de passe du PasswordBox au TextBox
-                PasswordTextBox.Text = PasswordBox.Password;
-            }
-            else
-            {
-                // Change l'icône pour masquer le mot de passe
-                EyeIcon.Kind = PackIconMaterialKind.EyeOff;
+                    // Copie le mot de passe du PasswordBox au TextBox
+                    PasswordTextBox.Text = PasswordBox.Password;
+                }
+                else
+                {
+                    // Change l'icône pour masquer le mot de passe
+                    EyeIcon.Kind = PackIconMaterialKind.EyeOff;
 
-                // Masque le TextBox et affiche le PasswordBox
-                PasswordTextBox.Visibility = Visibility.Collapsed;
-                PasswordBox.Visibility = Visibility.Visible;
+                    // Masque le TextBox et affiche le PasswordBox
+                    PasswordTextBox.Visibility = Visibility.Collapsed;
+                    PasswordBox.Visibility = Visibility.Visible;
 
-                // Copie le mot de passe du TextBox au PasswordBox
-                PasswordBox.Password = PasswordTextBox.Text;
+                    // Copie le mot de passe du TextBox au PasswordBox
+                    PasswordBox.Password = PasswordTextBox.Text;
+                }
             }
         }
 

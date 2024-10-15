@@ -23,7 +23,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="288">
 
             <!-- Section Connexion -->
             <TextBlock Text="Connexion" FontSize="24" FontWeight="Bold" Foreground="White" Margin="0,0,0,20" HorizontalAlignment="Center" FontFamily="{StaticResource RobotoRegular}"/>
@@ -113,22 +113,53 @@
 
                         <!-- ToggleButton pour afficher/masquer le mot de passe -->
                         <ToggleButton x:Name="TogglePasswordVisibility" 
-                              Grid.Column="2" 
-                              Width="24" 
-                              Height="24" 
-                              Margin="5"
-                              Cursor="Hand"        
-                              VerticalAlignment="Center" 
-                              Background="Transparent" 
-                              BorderThickness="0"
-                              IsChecked="False"
-                              Click="TogglePasswordVisibility_Click">
-                            <Icon:PackIconMaterial x:Name="EyeIcon" 
-                                   Kind="EyeOff" 
-                                   Width="24" 
-                                   Height="24"
-                                   Foreground="LightGray"/>
+              Grid.Column="2" 
+              Width="24"
+              Height="24" 
+              Margin="5"
+              Cursor="Hand"        
+              VerticalAlignment="Center" 
+              Background="Transparent"
+              BorderThickness="0"
+              IsChecked="False"
+              Click="TogglePasswordVisibility_Click">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Grid>
+                                        <Icon:PackIconMaterial x:Name="EyeIcon" 
+                                        Kind="EyeOff" 
+                                        Width="24" 
+                                        Height="24"
+                                        Foreground="LightGray"/>
+                                        <!-- Couleur de l'icône -->
+                                    </Grid>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+
+                            <ToggleButton.Style>
+                                <Style TargetType="ToggleButton">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="Foreground" Value="Transparent"/>
+                                    <!-- Aucun texte visible -->
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <!-- Pas de couleur pendant le hover -->
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <!-- Pas de couleur lorsqu'il est activé -->
+                                        </Trigger>
+                                        <Trigger Property="IsFocused" Value="True">
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <!-- Pas de couleur de focus -->
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
                         </ToggleButton>
+
                     </Grid>
                 </Border>
 
@@ -139,13 +170,20 @@
                     Style="{StaticResource LoginButtonStyle}" Height="40" 
                     />
 
-            <TextBlock Text="Pas encore de compte? Inscrivez-vous!" 
-                       FontSize="16" 
-                       Foreground="LightGray" 
-                       HorizontalAlignment="Center" 
-                       Margin="0,20,0,0" 
-                       Cursor="Hand"
-                       FontFamily="{StaticResource RobotoRegular}"/>
+            <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
+                <TextBlock Text="Pas encore de compte?" 
+                           FontSize="16" 
+                           Foreground="LightGray" 
+                           HorizontalAlignment="Center" 
+                           Margin="0,0,5,5"
+                           FontFamily="{StaticResource RobotoRegular}"/>
+                <TextBlock Text="Inscrivez-vous!"
+                           FontSize="16"
+                           Foreground="LightGray"
+                           Cursor="Hand"
+                           
+                           FontFamily="{StaticResource RobotoItalic}"/>
+            </StackPanel>
         </StackPanel>
 
     </Grid>
