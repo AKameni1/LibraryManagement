@@ -15,7 +15,6 @@
     <None Remove="Assets\Fonts\Roboto\Roboto-Regular.ttf" />
     <None Remove="Assets\Fonts\Roboto\Roboto-Thin.ttf" />
     <None Remove="Assets\Fonts\Roboto\Roboto-ThinItalic.ttf" />
-    <None Remove="Assets\Images\default.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,7 +29,6 @@
     <Resource Include="Assets\Fonts\Roboto\Roboto-Italic.ttf" />
     <Resource Include="Assets\Fonts\Roboto\Roboto-Regular.ttf" />
     <Resource Include="Assets\Fonts\Roboto\Roboto-Thin.ttf" />
-    <Resource Include="Assets\Images\default.png" />
   </ItemGroup>
 
 </Project>
