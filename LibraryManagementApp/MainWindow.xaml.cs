@@ -24,11 +24,74 @@ namespace LibraryManagementApp
             InitializeComponent();
         }
 
+        private void SignUp_Click(object sender, MouseButtonEventArgs e)
+        {
+            ToggleView(false); // false pour afficher la vue d'inscription
+        }
+
+
+        private void SignIn_Click(object sender, MouseButtonEventArgs e)
+        {
+            ToggleView(true); // true pour afficher la vue de connexion
+        }
+
+
+
+        private void ToggleView(bool isSignIn)
+        {
+            // Préparez les Storyboards pour l'animation
+            var fadeOutStoryboard = new Storyboard();
+            var fadeInStoryboard = new Storyboard();
+
+            // Animation pour la vue actuelle (SignIn ou SignUp)
+            DoubleAnimation fadeOutAnimation = new()
+            {
+                From = 1.0,
+                To = 0.0,
+                Duration = TimeSpan.FromSeconds(0.5),
+                FillBehavior = FillBehavior.HoldEnd
+            };
+
+            // Déterminez quel panneau est visible et doit s'estomper
+            var panelToFadeOut = isSignIn ? SignUpPanel : SignInPanel;
+            Storyboard.SetTarget(fadeOutAnimation, panelToFadeOut);
+            Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath("Opacity"));
+
+            fadeOutStoryboard.Children.Add(fadeOutAnimation);
+
+            fadeOutStoryboard.Completed += (s, e) =>
+            {
+                // Changer la visibilité une fois l'animation terminée
+                panelToFadeOut.Visibility = Visibility.Collapsed;
+
+                // Déterminer quel panneau doit apparaître
+                var panelToFadeIn = isSignIn ? SignInPanel : SignUpPanel;
+                panelToFadeIn.Visibility = Visibility.Visible;
+
+                // Animation pour la vue suivante
+                DoubleAnimation fadeInAnimation = new()
+                {
+                    From = 0.0,
+                    To = 1.0,
+                    Duration = TimeSpan.FromSeconds(0.5),
+                    FillBehavior = FillBehavior.HoldEnd
+                };
+
+                Storyboard.SetTarget(fadeInAnimation, panelToFadeIn);
+                Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath("Opacity"));
+
+                fadeInStoryboard.Children.Add(fadeInAnimation);
+                fadeInStoryboard.Begin();
+            };
+
+            fadeOutStoryboard.Begin();
+        }
+
+
+
         private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
-            var EyeIcon = TogglePasswordVisibility.Template.FindName("EyeIcon", TogglePasswordVisibility) as PackIconMaterial;
-
-            if (EyeIcon != null) 
+            if (TogglePasswordVisibility.Template.FindName("EyeIcon", TogglePasswordVisibility) is PackIconMaterial EyeIcon)
             {
                 if (TogglePasswordVisibility.IsChecked == true)
                 {
