@@ -12,15 +12,6 @@
         Width="800"
         Background="{StaticResource BackgroundGradient}">
 
-    <!-- Resources -->
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-
     <!-- Main Layout -->
     <Grid Margin="20">
         <Grid.ColumnDefinitions>

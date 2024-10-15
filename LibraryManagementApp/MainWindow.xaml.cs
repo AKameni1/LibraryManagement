@@ -37,7 +37,6 @@ namespace LibraryManagementApp
         }
 
 
-
         private void ToggleView(bool isSignIn)
         {
             // Préparez les Storyboards pour l'animation
@@ -272,6 +271,5 @@ namespace LibraryManagementApp
             }
         }
 
-
     }
-} 
+}

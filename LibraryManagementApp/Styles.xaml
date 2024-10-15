@@ -2,8 +2,37 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks">
 
-    <!-- Neon effect -->
-    <DropShadowEffect x:Key="NeonEffect" Color="#00FFFF" BlurRadius="4" ShadowDepth="0" Opacity="0.8"/>
+    <!--Ajout des polices personnalisées-->
+    <FontFamily x:Key="RobotoRegular">./Assets/Fonts/Roboto/Roboto-Regular.ttf#Roboto</FontFamily>
+    <FontFamily x:Key="RobotoBold">./Assets/Fonts/Roboto/Roboto-Bold.ttf#Roboto</FontFamily>
+    <FontFamily x:Key="RobotoItalic">./Assets/Fonts/Roboto/Roboto-Italic.ttf#Roboto</FontFamily>
+    <FontFamily x:Key="RobotoBoldItalic">./Assets/Fonts/Roboto/Roboto-BoldItalic.ttf#Roboto</FontFamily>
+    <FontFamily x:Key="RobotoThin">./Assets/Fonts/Roboto/Roboto-Thin.ttf#Roboto</FontFamily>
+
+    <!--Dégradé circulaire pour l'arrière-plan-->
+    <RadialGradientBrush x:Key="BackgroundGradient" GradientOrigin="0,0" Center="0,0" RadiusX="1" RadiusY="1">
+        <GradientStop Color="#5DE0E6" Offset="0" />
+        <GradientStop Color="#004AAD" Offset="0.8" />
+    </RadialGradientBrush>
+
+    <!--Style global des messages d'erreur-->
+    <Style x:Key="ErrorTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="Margin" Value="0,5,0,0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+
+    <Style TargetType="Border" x:Key="ErrorBorderStyle">
+        <Setter Property="Background" Value="LightCoral"/>
+        <Setter Property="BorderBrush" Value="Red"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Margin" Value="0,5,0,0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
 
     <!-- Style for buttons with a 3D effect -->
     <Style x:Key="LoginButtonStyle" TargetType="Button">
