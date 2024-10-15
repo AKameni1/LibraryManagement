@@ -125,9 +125,63 @@ namespace LibraryManagementApp
             }
         }
 
+        private void ShowError(string message, TextBlock errorTextBlock)
+        {
+            errorTextBlock.Text = message;
+            errorTextBlock.Visibility = Visibility.Visible;
+        }
 
+        private void ClearErrors()
+        {
+            UsernameErrorTextBlock.Visibility = Visibility.Collapsed;
+            PasswordErrorTextBlock.Visibility = Visibility.Collapsed;
+            SignUpUsernameErrorTextBlock.Visibility = Visibility.Collapsed;
+            SignUpPasswordErrorTextBlock.Visibility = Visibility.Collapsed;
+            ConfirmPasswordErrorTextBlock.Visibility = Visibility.Collapsed;
+        }
+
+        // Modifie la méthode SignInButton_Click
+        private void SignInButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClearErrors(); // Réinitialiser les messages d'erreur
+
+            string username = UsernameTextBox.Text;
+            string password = PasswordBox.Password;
+
+            if (!ValidateSignInForm(username, password))
+            {
+                return;
+            }
+
+            // Connexion réussie
+            // Affiche un message de succès ou traite la connexion ici
+        }
+
+        // Validation pour le panneau de connexion
+        private bool ValidateSignInForm(string username, string password)
+        {
+            bool isValid = true;
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                ShowError("Le nom d'utilisateur ne peut pas être vide.", UsernameErrorTextBlock);
+                isValid = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                ShowError("Le mot de passe ne peut pas être vide.", PasswordErrorTextBlock);
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Modifie la méthode SignUpButton_Click
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
+            ClearErrors(); // Réinitialiser les messages d'erreur
+
             string username = SignUpUsernameTextBox.Text;
             string password = SignUpPasswordBox.Password;
             string confirmPassword = ConfirmPasswordBox.Password;
@@ -138,37 +192,35 @@ namespace LibraryManagementApp
             }
 
             // Inscription réussie
-            MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+            // Affiche un message de succès ou traite l'inscription ici
         }
 
-
-        private static bool ValidateSignUpForm(string username, string password, string confirmPassword)
+        // Validation pour le panneau d'inscription
+        private bool ValidateSignUpForm(string username, string password, string confirmPassword)
         {
+            bool isValid = true;
+
             if (string.IsNullOrWhiteSpace(username))
             {
-                ShowError("Le nom d'utilisateur ne peut pas être vide.");
-                return false;
+                ShowError("Le nom d'utilisateur ne peut pas être vide.", SignUpUsernameErrorTextBlock);
+                isValid = false;
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                ShowError("Le mot de passe ne peut pas être vide.");
-                return false;
+                ShowError("Le mot de passe ne peut pas être vide.", SignUpPasswordErrorTextBlock);
+                isValid = false;
             }
 
             if (password != confirmPassword)
             {
-                ShowError("Les mots de passe ne correspondent pas.");
-                return false;
+                ShowError("Les mots de passe ne correspondent pas.", ConfirmPasswordErrorTextBlock);
+                isValid = false;
             }
 
-            return true;
+            return isValid;
         }
 
-        private static void ShowError(string message)
-        {
-            MessageBox.Show(message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
 
     }
-}
+} 

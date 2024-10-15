@@ -5,41 +5,61 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <!-- Ajout des polices personnalisées -->
+         <!--Ajout des polices personnalisées--> 
         <FontFamily x:Key="RobotoRegular">./Assets/Fonts/Roboto/Roboto-Regular.ttf#Roboto</FontFamily>
         <FontFamily x:Key="RobotoBold">./Assets/Fonts/Roboto/Roboto-Bold.ttf#Roboto</FontFamily>
         <FontFamily x:Key="RobotoItalic">./Assets/Fonts/Roboto/Roboto-Italic.ttf#Roboto</FontFamily>
         <FontFamily x:Key="RobotoBoldItalic">./Assets/Fonts/Roboto/Roboto-BoldItalic.ttf#Roboto</FontFamily>
         <FontFamily x:Key="RobotoThin">./Assets/Fonts/Roboto/Roboto-Thin.ttf#Roboto</FontFamily>
 
-        <!-- Dégradé circulaire pour l'arrière-plan -->
+         <!--Dégradé circulaire pour l'arrière-plan--> 
         <RadialGradientBrush x:Key="BackgroundGradient" GradientOrigin="0,0" Center="0,0" RadiusX="1" RadiusY="1">
             <GradientStop Color="#5DE0E6" Offset="0" />
             <GradientStop Color="#004AAD" Offset="0.7" />
         </RadialGradientBrush>
 
-        <!-- Animation du dégradé circulaire pour l'arrière-plan -->
-        <Storyboard x:Key="GradientAnimation">
-            <!-- Animation du RadiusX -->
-            <DoubleAnimation Storyboard.TargetName="BackgroundGradient"
-                             Storyboard.TargetProperty="RadiusX"
-                             From="1" To="1.5" Duration="0:0:5" 
-                             AutoReverse="True" RepeatBehavior="Forever" />
-            <!-- Animation du RadiusY -->
-            <DoubleAnimation Storyboard.TargetName="BackgroundGradient"
-                             Storyboard.TargetProperty="RadiusY"
-                             From="1" To="1.25" Duration="0:0:5" 
-                             AutoReverse="True" RepeatBehavior="Forever" />
+         <!--Animation des couleurs du dégradé circulaire--> 
+        <Storyboard x:Key="ColorAnimation">
+             <!--Animation de la première couleur du dégradé--> 
+            <ColorAnimation Storyboard.TargetName="StartColor"
+                            Storyboard.TargetProperty="Color"
+                            From="#5DE0E6" To="#3498DB" Duration="0:0:5"
+                            AutoReverse="True" RepeatBehavior="Forever" />
+
+             <!--Animation de la deuxième couleur du dégradé--> 
+            <ColorAnimation Storyboard.TargetName="EndColor"
+                            Storyboard.TargetProperty="Color"
+                            From="#004AAD" To="#2C3E50" Duration="0:0:5"
+                            AutoReverse="True" RepeatBehavior="Forever" />
         </Storyboard>
 
-        <!-- Style global pour appliquer l'arrière-plan et démarrer l'animation -->
+         <!--Style global pour appliquer l'arrière-plan et démarrer l'animation--> 
         <Style TargetType="Window">
             <Setter Property="Background" Value="{StaticResource BackgroundGradient}" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Window.Loaded">
-                    <BeginStoryboard Storyboard="{StaticResource GradientAnimation}" />
+                    <BeginStoryboard Storyboard="{StaticResource ColorAnimation}" />
                 </EventTrigger>
             </Style.Triggers>
+        </Style>
+
+        <!--Style global des messages d'erreur-->
+        <Style x:Key="ErrorTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
+        </Style>
+
+        <Style TargetType="Border" x:Key="ErrorBorderStyle">
+            <Setter Property="Background" Value="LightCoral"/>
+            <Setter Property="BorderBrush" Value="Red"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,5,0,0"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
         </Style>
 
 
