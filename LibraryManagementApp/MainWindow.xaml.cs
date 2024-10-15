@@ -125,19 +125,46 @@ namespace LibraryManagementApp
             }
         }
 
-        private void ShowError(string message, TextBlock errorTextBlock)
+        private void ShowError(string message, TextBlock errorTextBlock, Border errorBorder)
         {
             errorTextBlock.Text = message;
             errorTextBlock.Visibility = Visibility.Visible;
+            errorBorder.Visibility = Visibility.Visible;
+
+            // Animation (par exemple, faire apparaître progressivement)
+            var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(300));
+            errorTextBlock.BeginAnimation(OpacityProperty, fadeInAnimation);
         }
 
         private void ClearErrors()
         {
-            UsernameErrorTextBlock.Visibility = Visibility.Collapsed;
-            PasswordErrorTextBlock.Visibility = Visibility.Collapsed;
-            SignUpUsernameErrorTextBlock.Visibility = Visibility.Collapsed;
-            SignUpPasswordErrorTextBlock.Visibility = Visibility.Collapsed;
-            ConfirmPasswordErrorTextBlock.Visibility = Visibility.Collapsed;
+            var errorTextBlocks = new[]
+            {
+                UsernameErrorTextBlock,
+                PasswordErrorTextBlock,
+                SignUpUsernameErrorTextBlock,
+                SignUpPasswordErrorTextBlock,
+                ConfirmPasswordErrorTextBlock
+            };
+
+            var errorBorders = new[]
+            {
+                UsernameErrorBorder,
+                PasswordErrorBorder,
+                SignUpUsernameErrorBorder,
+                SignUpPasswordErrorBorder,
+                ConfirmPasswordErrorBorder
+            };
+
+            foreach (var textBlock in errorTextBlocks)
+            {
+                textBlock.Visibility = Visibility.Collapsed;
+            }
+
+            foreach (var border in errorBorders)
+            {
+                border.Visibility = Visibility.Collapsed;
+            }
         }
 
         // Modifie la méthode SignInButton_Click
@@ -154,7 +181,7 @@ namespace LibraryManagementApp
             }
 
             // Connexion réussie
-            // Affiche un message de succès ou traite la connexion ici
+            MessageBox.Show("Connexion réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // Validation pour le panneau de connexion
@@ -164,13 +191,13 @@ namespace LibraryManagementApp
 
             if (string.IsNullOrWhiteSpace(username))
             {
-                ShowError("Le nom d'utilisateur ne peut pas être vide.", UsernameErrorTextBlock);
+                ShowError("Le nom d'utilisateur ne peut pas être vide.", UsernameErrorTextBlock, UsernameErrorBorder);
                 isValid = false;
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                ShowError("Le mot de passe ne peut pas être vide.", PasswordErrorTextBlock);
+                ShowError("Le mot de passe ne peut pas être vide.", PasswordErrorTextBlock, PasswordErrorBorder);
                 isValid = false;
             }
 
@@ -180,45 +207,69 @@ namespace LibraryManagementApp
         // Modifie la méthode SignUpButton_Click
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            ClearErrors(); // Réinitialiser les messages d'erreur
+            // Récupérer les valeurs saisies
+            string username = SignUpUsernameTextBox.Text.Trim();
+            string password = SignUpPasswordBox.Password.Trim();
+            string confirmPassword = ConfirmPasswordBox.Password.Trim();
 
-            string username = SignUpUsernameTextBox.Text;
-            string password = SignUpPasswordBox.Password;
-            string confirmPassword = ConfirmPasswordBox.Password;
+            // Réinitialiser les messages d'erreur
+            ClearErrors();
 
-            if (!ValidateSignUpForm(username, password, confirmPassword))
+            // Valider le formulaire
+            var errors = ValidateSignUpForm(username, password, confirmPassword);
+
+            // Afficher les erreurs si présentes
+            if (errors.Count > 0)
             {
+                ShowErrors(errors);
                 return;
             }
 
             // Inscription réussie
-            // Affiche un message de succès ou traite l'inscription ici
+            MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        // Validation pour le panneau d'inscription
-        private bool ValidateSignUpForm(string username, string password, string confirmPassword)
+        private Dictionary<string, string> ValidateSignUpForm(string username, string password, string confirmPassword)
         {
-            bool isValid = true;
+            var errors = new Dictionary<string, string>();
 
+            // Vérifications pour chaque champ
             if (string.IsNullOrWhiteSpace(username))
             {
-                ShowError("Le nom d'utilisateur ne peut pas être vide.", SignUpUsernameErrorTextBlock);
-                isValid = false;
+                errors[nameof(SignUpUsernameErrorTextBlock)] = "Le nom d'utilisateur ne peut pas être vide.";
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                ShowError("Le mot de passe ne peut pas être vide.", SignUpPasswordErrorTextBlock);
-                isValid = false;
+                errors[nameof(SignUpPasswordErrorTextBlock)] = "Le mot de passe ne peut pas être vide.";
+            }
+            else if (password.Length < 6) // Exemple de vérification de longueur
+            {
+                errors[nameof(SignUpPasswordErrorTextBlock)] = "Le mot de passe doit contenir au moins 6 caractères.";
             }
 
             if (password != confirmPassword)
             {
-                ShowError("Les mots de passe ne correspondent pas.", ConfirmPasswordErrorTextBlock);
-                isValid = false;
+                errors[nameof(ConfirmPasswordErrorTextBlock)] = "Les mots de passe ne correspondent pas.";
             }
 
-            return isValid;
+            return errors;
+        }
+
+        private void ShowErrors(Dictionary<string, string> errors)
+        {
+            foreach (var error in errors)
+            {
+                string errorTextBlockName = error.Key;
+                string errorMessage = error.Value;
+
+                // Récupérer le TextBlock et la bordure d'erreur correspondants
+                var errorTextBlock = (TextBlock)FindName(errorTextBlockName);
+                var errorBorderName = errorTextBlockName.Replace("ErrorTextBlock", "ErrorBorder");
+                var errorBorder = (Border)FindName(errorBorderName);
+
+                ShowError(errorMessage, errorTextBlock, errorBorder);
+            }
         }
 
 

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="Connexion - Gestion de Bibliothèque"
-        Height="600"
+        Height="650"
         Width="800"
         Background="{StaticResource BackgroundGradient}">
 
@@ -49,7 +49,10 @@
                             <TextBox x:Name="UsernameTextBox" Style="{StaticResource InputTextBoxStyle}" Grid.Column="1"/>
                         </Grid>
                     </Border>
-                    <TextBlock x:Name="UsernameErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+
+                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="UsernameErrorBorder" Visibility="Collapsed">
+                        <TextBlock x:Name="UsernameErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+                    </Border>
 
                 </StackPanel>
 
@@ -74,7 +77,11 @@
                             </ToggleButton>
                         </Grid>
                     </Border>
-                    <TextBlock x:Name="PasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}"/>
+
+                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="PasswordErrorBorder" Visibility="Collapsed">
+                        <TextBlock x:Name="PasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+                    </Border>
+
                 </StackPanel>
 
                 <Button Content="Se connecter" Style="{StaticResource LoginButtonStyle}" Click="SignInButton_Click"/>
@@ -101,7 +108,11 @@
                             <TextBox x:Name="SignUpUsernameTextBox" Style="{StaticResource InputTextBoxStyle}" Grid.Column="1"/>
                         </Grid>
                     </Border>
-                    <TextBlock x:Name="SignUpUsernameErrorTextBlock" Style="{StaticResource ErrorTextStyle}"/>
+
+                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="SignUpUsernameErrorBorder" Visibility="Collapsed">
+                        <TextBlock x:Name="SignUpUsernameErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+                    </Border>
+
                 </StackPanel>
 
                 <StackPanel Margin="0,0,0,10">
@@ -125,7 +136,11 @@
                             </ToggleButton>
                         </Grid>
                     </Border>
-                    <TextBlock x:Name="SignUpPasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}"/>
+
+                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="SignUpPasswordErrorBorder" Visibility="Collapsed">
+                        <TextBlock x:Name="SignUpPasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+                    </Border>
+
                 </StackPanel>
 
                 <StackPanel Margin="0,0,0,10">
@@ -149,7 +164,11 @@
                             </ToggleButton>
                         </Grid>
                     </Border>
-                    <TextBlock x:Name="ConfirmPasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}"/>
+
+                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="ConfirmPasswordErrorBorder" Visibility="Collapsed">
+                        <TextBlock x:Name="ConfirmPasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+                    </Border>
+
                 </StackPanel>
 
                 <Button Content="S'inscrire" Style="{StaticResource LoginButtonStyle}" Margin="0,10,0,0" Click="SignUpButton_Click"/>
