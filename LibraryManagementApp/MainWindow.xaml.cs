@@ -37,6 +37,7 @@ namespace LibraryManagementApp
         }
 
 
+
         private void ToggleView(bool isSignIn)
         {
             // Préparez les Storyboards pour l'animation
@@ -87,188 +88,132 @@ namespace LibraryManagementApp
             fadeOutStoryboard.Begin();
         }
 
+
+
         private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
-            TogglePasswordVisibilityFunction(PasswordBox, PasswordTextBox, TogglePasswordVisibility, "EyeIcon");
+            if (TogglePasswordVisibility.Template.FindName("EyeIcon", TogglePasswordVisibility) is PackIconMaterial EyeIcon)
+            {
+                if (TogglePasswordVisibility.IsChecked == true)
+                {
+                    // Change l'icône pour afficher le mot de passe
+                    EyeIcon.Kind = PackIconMaterialKind.Eye;
+
+                    // Affiche le mot de passe en clair et masque le PasswordBox
+                    PasswordTextBox.Visibility = Visibility.Visible;
+                    PasswordBox.Visibility = Visibility.Collapsed;
+
+                    // Copie le mot de passe du PasswordBox au TextBox
+                    PasswordTextBox.Text = PasswordBox.Password;
+                }
+                else
+                {
+                    // Change l'icône pour masquer le mot de passe
+                    EyeIcon.Kind = PackIconMaterialKind.EyeOff;
+
+                    // Masque le TextBox et affiche le PasswordBox
+                    PasswordTextBox.Visibility = Visibility.Collapsed;
+                    PasswordBox.Visibility = Visibility.Visible;
+
+                    // Copie le mot de passe du TextBox au PasswordBox
+                    PasswordBox.Password = PasswordTextBox.Text;
+                }
+            }
         }
 
         private void ToggleSignUpPasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
-            TogglePasswordVisibilityFunction(SignUpPasswordBox, SignUpPasswordTextBox, ToggleSignUpPasswordVisibility, "SignUpEyeIcon");
-        }
-
-        private void ToggleConfirmPasswordVisibility_Click(object sender, RoutedEventArgs e)
-        {
-            TogglePasswordVisibilityFunction(ConfirmPasswordBox, ConfirmPasswordTextBox, ToggleConfirmPasswordVisibility, "ConfirmPasswordEyeIcon");
-        }
-
-
-        private static void TogglePasswordVisibilityFunction(PasswordBox passwordBox, TextBox textBox, ToggleButton toggleButton, string iconName)
-        {
-            if (toggleButton.Template.FindName(iconName, toggleButton) is PackIconMaterial icon)
+            if (ToggleSignUpPasswordVisibility.Template.FindName("SignUpEyeIcon", ToggleSignUpPasswordVisibility) is PackIconMaterial SignUpEyeIcon)
             {
-                if (toggleButton.IsChecked == true)
+                if (ToggleSignUpPasswordVisibility.IsChecked == true)
                 {
-                    icon.Kind = PackIconMaterialKind.Eye;
-                    textBox.Visibility = Visibility.Visible;
-                    passwordBox.Visibility = Visibility.Collapsed;
-                    textBox.Text = passwordBox.Password;
+                    // Change l'icône pour afficher le mot de passe
+                    SignUpEyeIcon.Kind = PackIconMaterialKind.Eye;
+
+                    // Affiche le mot de passe en clair et masque le PasswordBox
+                    SignUpPasswordTextBox.Visibility = Visibility.Visible;
+                    SignUpPasswordBox.Visibility = Visibility.Collapsed;
+
+                    // Copie le mot de passe du PasswordBox au TextBox
+                    SignUpPasswordTextBox.Text = SignUpPasswordBox.Password;
                 }
                 else
                 {
-                    icon.Kind = PackIconMaterialKind.EyeOff;
-                    textBox.Visibility = Visibility.Collapsed;
-                    passwordBox.Visibility = Visibility.Visible;
-                    passwordBox.Password = textBox.Text;
+                    // Change l'icône pour masquer le mot de passe
+                    SignUpEyeIcon.Kind = PackIconMaterialKind.EyeOff;
+
+                    // Masque le TextBox et affiche le PasswordBox
+                    SignUpPasswordTextBox.Visibility = Visibility.Collapsed;
+                    SignUpPasswordBox.Visibility = Visibility.Visible;
+
+                    // Copie le mot de passe du TextBox au PasswordBox
+                    SignUpPasswordBox.Password = SignUpPasswordTextBox.Text;
                 }
             }
         }
 
-        private void ShowError(string message, TextBlock errorTextBlock, Border errorBorder)
+
+        private void ToggleConfirmPasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
-            errorTextBlock.Text = message;
-            errorTextBlock.Visibility = Visibility.Visible;
-            errorBorder.Visibility = Visibility.Visible;
-
-            // Animation (par exemple, faire apparaître progressivement)
-            var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(300));
-            errorTextBlock.BeginAnimation(OpacityProperty, fadeInAnimation);
-        }
-
-        private void ClearErrors()
-        {
-            var errorTextBlocks = new[]
+            if (ToggleConfirmPasswordVisibility.Template.FindName("ConfirmPasswordEyeIcon", ToggleConfirmPasswordVisibility) is PackIconMaterial ConfirmPasswordEyeIcon)
             {
-                UsernameErrorTextBlock,
-                PasswordErrorTextBlock,
-                SignUpUsernameErrorTextBlock,
-                SignUpPasswordErrorTextBlock,
-                ConfirmPasswordErrorTextBlock
-            };
+                if (ToggleConfirmPasswordVisibility.IsChecked == true)
+                {
+                    // Change l'icône pour afficher le mot de passe
+                    ConfirmPasswordEyeIcon.Kind = PackIconMaterialKind.Eye;
 
-            var errorBorders = new[]
-            {
-                UsernameErrorBorder,
-                PasswordErrorBorder,
-                SignUpUsernameErrorBorder,
-                SignUpPasswordErrorBorder,
-                ConfirmPasswordErrorBorder
-            };
+                    // Affiche le mot de passe en clair et masque le PasswordBox
+                    ConfirmPasswordTextBox.Visibility = Visibility.Visible;
+                    ConfirmPasswordBox.Visibility = Visibility.Collapsed;
 
-            foreach (var textBlock in errorTextBlocks)
-            {
-                textBlock.Visibility = Visibility.Collapsed;
-            }
+                    // Copie le mot de passe du PasswordBox au TextBox
+                    ConfirmPasswordTextBox.Text = ConfirmPasswordBox.Password;
+                }
+                else
+                {
+                    // Change l'icône pour masquer le mot de passe
+                    ConfirmPasswordEyeIcon.Kind = PackIconMaterialKind.EyeOff;
 
-            foreach (var border in errorBorders)
-            {
-                border.Visibility = Visibility.Collapsed;
+                    // Masque le TextBox et affiche le PasswordBox
+                    ConfirmPasswordTextBox.Visibility = Visibility.Collapsed;
+                    ConfirmPasswordBox.Visibility = Visibility.Visible;
+
+                    // Copie le mot de passe du TextBox au PasswordBox
+                    ConfirmPasswordBox.Password = ConfirmPasswordTextBox.Text;
+                }
             }
         }
 
-        // Modifie la méthode SignInButton_Click
-        private void SignInButton_Click(object sender, RoutedEventArgs e)
-        {
-            ClearErrors(); // Réinitialiser les messages d'erreur
-
-            string username = UsernameTextBox.Text;
-            string password = PasswordBox.Password;
-
-            if (!ValidateSignInForm(username, password))
-            {
-                return;
-            }
-
-            // Connexion réussie
-            MessageBox.Show("Connexion réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        // Validation pour le panneau de connexion
-        private bool ValidateSignInForm(string username, string password)
-        {
-            bool isValid = true;
-
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                ShowError("Le nom d'utilisateur ne peut pas être vide.", UsernameErrorTextBlock, UsernameErrorBorder);
-                isValid = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                ShowError("Le mot de passe ne peut pas être vide.", PasswordErrorTextBlock, PasswordErrorBorder);
-                isValid = false;
-            }
-
-            return isValid;
-        }
-
-        // Modifie la méthode SignUpButton_Click
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérer les valeurs saisies
-            string username = SignUpUsernameTextBox.Text.Trim();
-            string password = SignUpPasswordBox.Password.Trim();
-            string confirmPassword = ConfirmPasswordBox.Password.Trim();
+            // Récupérer les valeurs des champs
+            string username = SignUpUsernameTextBox.Text;
+            string password = SignUpPasswordBox.Password;
+            string confirmPassword = ConfirmPasswordBox.Password;
 
-            // Réinitialiser les messages d'erreur
-            ClearErrors();
-
-            // Valider le formulaire
-            var errors = ValidateSignUpForm(username, password, confirmPassword);
-
-            // Afficher les erreurs si présentes
-            if (errors.Count > 0)
-            {
-                ShowErrors(errors);
-                return;
-            }
-
-            // Inscription réussie
-            MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        private Dictionary<string, string> ValidateSignUpForm(string username, string password, string confirmPassword)
-        {
-            var errors = new Dictionary<string, string>();
-
-            // Vérifications pour chaque champ
+            // Validation des entrées
             if (string.IsNullOrWhiteSpace(username))
             {
-                errors[nameof(SignUpUsernameErrorTextBlock)] = "Le nom d'utilisateur ne peut pas être vide.";
+                MessageBox.Show("Le nom d'utilisateur ne peut pas être vide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                errors[nameof(SignUpPasswordErrorTextBlock)] = "Le mot de passe ne peut pas être vide.";
-            }
-            else if (password.Length < 6) // Exemple de vérification de longueur
-            {
-                errors[nameof(SignUpPasswordErrorTextBlock)] = "Le mot de passe doit contenir au moins 6 caractères.";
+                MessageBox.Show("Le mot de passe ne peut pas être vide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
             if (password != confirmPassword)
             {
-                errors[nameof(ConfirmPasswordErrorTextBlock)] = "Les mots de passe ne correspondent pas.";
+                MessageBox.Show("Les mots de passe ne correspondent pas.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
-            return errors;
-        }
+            // Si toutes les validations passent, procéder à l'inscription
+            // (ajouter votre logique d'inscription ici, comme l'enregistrement dans une base de données)
 
-        private void ShowErrors(Dictionary<string, string> errors)
-        {
-            foreach (var error in errors)
-            {
-                string errorTextBlockName = error.Key;
-                string errorMessage = error.Value;
-
-                // Récupérer le TextBlock et la bordure d'erreur correspondants
-                var errorTextBlock = (TextBlock)FindName(errorTextBlockName);
-                var errorBorderName = errorTextBlockName.Replace("ErrorTextBlock", "ErrorBorder");
-                var errorBorder = (Border)FindName(errorBorderName);
-
-                ShowError(errorMessage, errorTextBlock, errorBorder);
-            }
+            MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
     }

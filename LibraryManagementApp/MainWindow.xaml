@@ -7,194 +7,349 @@
         xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Connexion - Gestion de Bibliothèque"
-        Height="650"
-        Width="800"
-        Background="{StaticResource BackgroundGradient}">
+        Title="Connexion - Gestion de Bibliothèque" Height="600" Width="800" Background="{StaticResource ResourceKey=BackgroundGradient}">
 
-    <!-- Main Layout -->
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid x:Name="MainGrid" Grid.Column="0">
+        <Grid x:Name="MainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- SignIn View -->
+            <!-- Vue de connexion -->
             <StackPanel x:Name="SignInPanel" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
-                <TextBlock Text="Connexion" Style="{StaticResource TitleTextStyle}" Margin="0,0,0,20"/>
+
+                <!-- Section Connexion -->
+                <TextBlock Text="Connexion" FontSize="24" FontWeight="Bold" Foreground="White" Margin="0,0,0,20" HorizontalAlignment="Center" FontFamily="{StaticResource RobotoRegular}"/>
 
                 <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Nom d'utilisateur" Style="{StaticResource LabelTextStyle}"/>
-                    <Border Style="{StaticResource InputBorderStyle}">
+                    <TextBlock Text="Nom d'utilisateur" 
+                               Foreground="LightGray" 
+                               Margin="5,0,0,3" 
+                               VerticalAlignment="Center" 
+                               FontSize="18"
+                               FontFamily="{StaticResource RobotoRegular}"/>
+
+                    <Border Background="#1A1A1A" BorderBrush="#00BFFF" BorderThickness="2" CornerRadius="5" Margin="0,0,0,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Icon:PackIconMaterial Kind="Account" Style="{StaticResource IconStyle}"/>
-                            <TextBox x:Name="UsernameTextBox" Style="{StaticResource InputTextBoxStyle}" Grid.Column="1"/>
+
+                            <Icon:PackIconMaterial Kind="Account" 
+                                                    Width="24" 
+                                                    Height="24" 
+                                                    Margin="5" 
+                                                    Foreground="LightGray"/>
+                            <TextBox x:Name="UsernameTextBox" 
+                                     Background="Transparent" 
+                                     Foreground="White" 
+                                     BorderThickness="0" 
+                                     FontSize="16"
+                                     FontFamily="{StaticResource RobotoRegular}"
+                                     Margin="10,0"
+                                     CaretBrush="White"
+                                     Padding="5"
+                                     Grid.Column="1"/>
                         </Grid>
                     </Border>
 
-                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="UsernameErrorBorder" Visibility="Collapsed">
-                        <TextBlock x:Name="UsernameErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
-                    </Border>
+                    <TextBlock Text="Mot de passe" 
+                               Foreground="LightGray" 
+                               Margin="5,0,0,3" 
+                               VerticalAlignment="Center" 
+                               FontSize="18" 
+                               FontFamily="{StaticResource RobotoRegular}"/>
 
-                </StackPanel>
 
-                <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Mot de passe" Style="{StaticResource LabelTextStyle}"/>
-                    <Border Style="{StaticResource InputBorderStyle}">
+
+                    <Border Background="#1A1A1A" BorderBrush="#00BFFF" BorderThickness="2" CornerRadius="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Icon:PackIconMaterial Kind="Lock" Style="{StaticResource IconStyle}"/>
-                            <PasswordBox x:Name="PasswordBox" Style="{StaticResource InputPasswordBoxStyle}" Grid.Column="1"/>
-                            <TextBox x:Name="PasswordTextBox" Style="{StaticResource InputTextBoxStyle}" Visibility="Collapsed" Grid.Column="1"/>
-                            <ToggleButton x:Name="TogglePasswordVisibility" Style="{StaticResource ToggleVisibilityButtonStyle}" Grid.Column="2" Click="TogglePasswordVisibility_Click">
+
+                            <!-- Icone pour le champ mot de passe -->
+                            <Icon:PackIconMaterial Kind="Lock" 
+                                    Width="24" 
+                                    Height="24" 
+                                    Margin="5"
+                                    Foreground="LightGray"/>
+
+                            <!-- PasswordBox pour la saisie du mot de passe -->
+                            <PasswordBox x:Name="PasswordBox" 
+                                          Background="Transparent" 
+                                          Foreground="White" 
+                                          BorderThickness="0" 
+                                          FontSize="16"
+                                          FontFamily="{StaticResource RobotoRegular}"
+                                          Margin="5,0"
+                                          CaretBrush="White"
+                                          Padding="5"                                      
+                                          Grid.Column="1"/>
+
+                            <!-- TextBox pour afficher le mot de passe en clair -->
+                            <TextBox x:Name="PasswordTextBox" 
+                                    Background="Transparent" 
+                                    Foreground="White"
+                                    BorderThickness="0" 
+                                    FontSize="16"
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    Margin="5,0"
+                                    CaretBrush="White"
+                                    Padding="5"
+                                    Visibility="Collapsed" 
+                                    Grid.Column="1"
+                            />
+
+                            <!-- ToggleButton pour afficher/masquer le mot de passe -->
+                            <ToggleButton x:Name="TogglePasswordVisibility" 
+                                          Grid.Column="2" 
+                                          Width="24"
+                                          Height="24" 
+                                          Margin="5"
+                                          Cursor="Hand"        
+                                          VerticalAlignment="Center" 
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          IsChecked="False"
+                                          Click="TogglePasswordVisibility_Click">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
-                                        <Icon:PackIconMaterial x:Name="EyeIcon" Kind="EyeOff" Style="{StaticResource IconStyle}"/>
+                                        <Grid>
+                                            <Icon:PackIconMaterial x:Name="EyeIcon" 
+                                                                    Kind="EyeOff" 
+                                                                    Width="24" 
+                                                                    Height="24"
+                                                                    Foreground="LightGray"/>
+                                            <!-- Couleur de l'icône -->
+                                        </Grid>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                             </ToggleButton>
-                        </Grid>
-                    </Border>
 
-                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="PasswordErrorBorder" Visibility="Collapsed">
-                        <TextBlock x:Name="PasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+                        </Grid>
                     </Border>
 
                 </StackPanel>
 
-                <Button Content="Se connecter" Style="{StaticResource LoginButtonStyle}" Click="SignInButton_Click"/>
+                <Button Content="Se connecter"
+                        FontFamily="{StaticResource RobotoRegular}"
+                        Style="{StaticResource LoginButtonStyle}" Height="40" 
+                        />
 
                 <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
-                    <TextBlock Text="Pas encore de compte?" Style="{StaticResource SecondaryTextStyle}"/>
-                    <TextBlock Text="Inscrivez-vous!" Style="{StaticResource LinkTextStyle}" MouseDown="SignUp_Click"/>
+                    <TextBlock Text="Pas encore de compte?" 
+                               FontSize="16" 
+                               Foreground="LightGray" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,0,5,5"
+                               FontFamily="{StaticResource RobotoRegular}"/>
+                    <TextBlock Text="Inscrivez-vous!"
+                               FontSize="16"
+                               Foreground="LightGray"
+                               Cursor="Hand"
+                               MouseDown="SignUp_Click"
+                               FontFamily="{StaticResource RobotoItalic}"/>
                 </StackPanel>
             </StackPanel>
 
-            <!-- SignUp View -->
+
+            <!-- Vue d'inscription -->
             <StackPanel x:Name="SignUpPanel" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
-                <TextBlock Text="Inscription" Style="{StaticResource TitleTextStyle}" Margin="0,0,0,20"/>
+                <!-- Section Inscription -->
+                <TextBlock Text="Inscription" FontSize="24" FontWeight="Bold" Foreground="White" Margin="0,0,0,20" HorizontalAlignment="Center" FontFamily="{StaticResource RobotoRegular}"/>
 
                 <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Nom d'utilisateur" Style="{StaticResource LabelTextStyle}"/>
-                    <Border Style="{StaticResource InputBorderStyle}">
+                    <TextBlock Text="Nom d'utilisateur" 
+                               Foreground="LightGray" 
+                               Margin="5,0,0,3" 
+                               VerticalAlignment="Center" 
+                               FontSize="18"
+                               FontFamily="{StaticResource RobotoRegular}"/>
+
+                    <Border Background="#1A1A1A" BorderBrush="#00BFFF" BorderThickness="2" CornerRadius="5" Margin="0,0,0,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Icon:PackIconMaterial Kind="Account" Style="{StaticResource IconStyle}"/>
-                            <TextBox x:Name="SignUpUsernameTextBox" Style="{StaticResource InputTextBoxStyle}" Grid.Column="1"/>
+
+                            <Icon:PackIconMaterial Kind="Account" Width="24" Height="24" Margin="5" Foreground="LightGray"/>
+                            <TextBox x:Name="SignUpUsernameTextBox" 
+                                     Background="Transparent" 
+                                     Foreground="White" 
+                                     BorderThickness="0" 
+                                     FontSize="16"
+                                     FontFamily="{StaticResource RobotoRegular}"
+                                     Margin="10,0"
+                                     CaretBrush="White"
+                                     Padding="5"
+                                     Grid.Column="1"/>
                         </Grid>
                     </Border>
 
-                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="SignUpUsernameErrorBorder" Visibility="Collapsed">
-                        <TextBlock x:Name="SignUpUsernameErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
-                    </Border>
+                    <TextBlock Text="Mot de passe" 
+                               Foreground="LightGray" 
+                               Margin="5,0,0,3" 
+                               VerticalAlignment="Center" 
+                               FontSize="18" 
+                               FontFamily="{StaticResource RobotoRegular}"/>
 
-                </StackPanel>
-
-                <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Mot de passe" Style="{StaticResource LabelTextStyle}"/>
-                    <Border Style="{StaticResource InputBorderStyle}">
+                    <Border Background="#1A1A1A" BorderBrush="#00BFFF" BorderThickness="2" CornerRadius="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Icon:PackIconMaterial Kind="Lock" Style="{StaticResource IconStyle}"/>
-                            <PasswordBox x:Name="SignUpPasswordBox" Style="{StaticResource InputPasswordBoxStyle}" Grid.Column="1"/>
-                            <TextBox x:Name="SignUpPasswordTextBox" Style="{StaticResource InputTextBoxStyle}" Visibility="Collapsed" Grid.Column="1"/>
-                            <ToggleButton x:Name="ToggleSignUpPasswordVisibility" Style="{StaticResource ToggleVisibilityButtonStyle}" Grid.Column="2" Click="ToggleSignUpPasswordVisibility_Click">
+
+                            <Icon:PackIconMaterial Kind="Lock" Width="24" Height="24" Margin="5" Foreground="LightGray"/>
+                            <PasswordBox x:Name="SignUpPasswordBox" 
+                                          Background="Transparent" 
+                                          Foreground="White" 
+                                          BorderThickness="0" 
+                                          FontSize="16"
+                                          FontFamily="{StaticResource RobotoRegular}"
+                                          Margin="5,0"
+                                          CaretBrush="White"
+                                          Padding="5"
+                                          Grid.Column="1"/>
+                            <TextBox x:Name="SignUpPasswordTextBox" 
+                                    Background="Transparent" 
+                                    Foreground="White"
+                                    BorderThickness="0" 
+                                    FontSize="16"
+                                    FontFamily="{StaticResource RobotoRegular}"
+                                    Margin="5,0"
+                                    CaretBrush="White"
+                                    Padding="5"
+                                    Visibility="Collapsed" 
+                                    Grid.Column="1"/>
+                            <ToggleButton x:Name="ToggleSignUpPasswordVisibility" 
+                                          Grid.Column="2" 
+                                          Width="24"
+                                          Height="24" 
+                                          Margin="5"
+                                          Cursor="Hand"        
+                                          VerticalAlignment="Center" 
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          IsChecked="False"
+                                          Click="ToggleSignUpPasswordVisibility_Click">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
-                                        <Icon:PackIconMaterial x:Name="SignUpEyeIcon" Kind="EyeOff" Style="{StaticResource IconStyle}"/>
+                                        <Grid>
+                                            <Icon:PackIconMaterial x:Name="SignUpEyeIcon" 
+                                                                    Kind="EyeOff" 
+                                                                    Width="24" 
+                                                                    Height="24"
+                                                                    Foreground="LightGray"/>
+                                        </Grid>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                             </ToggleButton>
                         </Grid>
                     </Border>
 
-                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="SignUpPasswordErrorBorder" Visibility="Collapsed">
-                        <TextBlock x:Name="SignUpPasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
-                    </Border>
+                    <TextBlock Text="Confirmer le mot de passe" 
+                               Foreground="LightGray" 
+                               Margin="5,0,0,3" 
+                               VerticalAlignment="Center" 
+                               FontSize="18" 
+                               FontFamily="{StaticResource RobotoRegular}"/>
 
-                </StackPanel>
-
-                <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Confirmer le mot de passe" Style="{StaticResource LabelTextStyle}"/>
-                    <Border Style="{StaticResource InputBorderStyle}">
+                    <Border Background="#1A1A1A" BorderBrush="#00BFFF" BorderThickness="2" CornerRadius="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Icon:PackIconMaterial Kind="Lock" Style="{StaticResource IconStyle}"/>
-                            <PasswordBox x:Name="ConfirmPasswordBox" Style="{StaticResource InputPasswordBoxStyle}" Grid.Column="1"/>
-                            <TextBox x:Name="ConfirmPasswordTextBox" Style="{StaticResource InputTextBoxStyle}" Visibility="Collapsed" Grid.Column="1"/>
-                            <ToggleButton x:Name="ToggleConfirmPasswordVisibility" Style="{StaticResource ToggleVisibilityButtonStyle}" Grid.Column="2" Click="ToggleConfirmPasswordVisibility_Click">
+
+                            <Icon:PackIconMaterial Kind="Lock" Width="24" Height="24" Margin="5" Foreground="LightGray"/>
+                            <PasswordBox x:Name="ConfirmPasswordBox" 
+                                          Background="Transparent" 
+                                          Foreground="White" 
+                                          BorderThickness="0" 
+                                          FontSize="16"
+                                          FontFamily="{StaticResource RobotoRegular}"
+                                          Margin="5,0"
+                                          CaretBrush="White"
+                                          Padding="5"                                      
+                                          Grid.Column="1"/>
+                            <TextBox x:Name="ConfirmPasswordTextBox" 
+                                        Background="Transparent" 
+                                        Foreground="White"
+                                        BorderThickness="0" 
+                                        FontSize="16"
+                                        FontFamily="{StaticResource RobotoRegular}"
+                                        Margin="5,0"
+                                        CaretBrush="White"
+                                        Padding="5"
+                                        Visibility="Collapsed" 
+                                        Grid.Column="1"
+                    />
+                            <ToggleButton x:Name="ToggleConfirmPasswordVisibility" 
+                                          Grid.Column="2" 
+                                          Width="24"
+                                          Height="24" 
+                                          Margin="5"
+                                          Cursor="Hand"        
+                                          VerticalAlignment="Center" 
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          IsChecked="False"
+                                          Click="ToggleConfirmPasswordVisibility_Click">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
-                                        <Icon:PackIconMaterial x:Name="ConfirmPasswordEyeIcon" Kind="EyeOff" Style="{StaticResource IconStyle}"/>
+                                        <Grid>
+                                            <Icon:PackIconMaterial x:Name="ConfirmPasswordEyeIcon" 
+                                                                    Kind="EyeOff" 
+                                                                    Width="24" 
+                                                                    Height="24"
+                                                                    Foreground="LightGray"/>
+                                        </Grid>
                                     </ControlTemplate>
                                 </ToggleButton.Template>
                             </ToggleButton>
                         </Grid>
                     </Border>
-
-                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="ConfirmPasswordErrorBorder" Visibility="Collapsed">
-                        <TextBlock x:Name="ConfirmPasswordErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
-                    </Border>
-
                 </StackPanel>
 
-                <Button Content="S'inscrire" Style="{StaticResource LoginButtonStyle}" Margin="0,10,0,0" Click="SignUpButton_Click"/>
+                <Button Content="S'inscrire" FontFamily="{StaticResource RobotoRegular}" Style="{StaticResource LoginButtonStyle}" Height="40" Margin="0,10,0,0" Click="SignUpButton_Click"/>
 
                 <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
-                    <TextBlock Text="Déjà un compte?" Style="{StaticResource SecondaryTextStyle}"/>
-                    <TextBlock Text="Connectez-vous!" Style="{StaticResource LinkTextStyle}" MouseDown="SignIn_Click"/>
+                    <TextBlock Text="Déjà un compte?" 
+                               FontSize="16" 
+                               Foreground="LightGray" 
+                               HorizontalAlignment="Center" 
+                               Margin="0,0,5,5"
+                               FontFamily="{StaticResource RobotoRegular}"/>
+                    <TextBlock Text="Connectez-vous!"
+                               FontSize="16"
+                               Foreground="LightGray"
+                               Cursor="Hand"
+                               MouseDown="SignIn_Click"
+                               FontFamily="{StaticResource RobotoItalic}"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
-
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0" Grid.Column="1">
-            <!-- Logo -->
-            <Image Source="Assets/Images/default.png" Width="200" Height="200" HorizontalAlignment="Center" Opacity="0">
-                <Image.Triggers>
-                    <EventTrigger RoutedEvent="Image.Loaded">
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:2"/>
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger>
-                </Image.Triggers>
-            </Image>
-
-            <!-- Introduction -->
-            <TextBlock Text="Bienvenue dans notre application de gestion de bibliothèque. Veuillez vous connecter ou vous inscrire pour continuer." 
-               TextAlignment="Center" 
-               FontSize="14"
-               FontFamily="{StaticResource RobotoThin}"
-               Foreground="LightGray" 
-               Margin="0,10,0,0" 
-               TextWrapping="Wrap"
-               MaxWidth="300"/>
-        </StackPanel>
-
     </Grid>
 </Window>
