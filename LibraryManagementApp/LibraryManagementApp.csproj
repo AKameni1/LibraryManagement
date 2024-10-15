@@ -9,9 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\Roboto\Roboto-Bold.ttf" />
+    <None Remove="Assets\Fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <None Remove="Assets\Fonts\Roboto\Roboto-Italic.ttf" />
+    <None Remove="Assets\Fonts\Roboto\Roboto-Regular.ttf" />
+    <None Remove="Assets\Fonts\Roboto\Roboto-Thin.ttf" />
+    <None Remove="Assets\Fonts\Roboto\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Bromix.MudBlazor.MaterialDesignIcons" Version="7.4.47.56" />
     <PackageReference Include="FontLibrary.libRoboto" Version="1.0.0" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Fonts\Roboto\Roboto-Bold.ttf" />
+    <Resource Include="Assets\Fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto\Roboto-Italic.ttf" />
+    <Resource Include="Assets\Fonts\Roboto\Roboto-Regular.ttf" />
+    <Resource Include="Assets\Fonts\Roboto\Roboto-Thin.ttf" />
   </ItemGroup>
 
 </Project>

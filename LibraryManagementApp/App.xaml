@@ -4,13 +4,20 @@
              xmlns:local="clr-namespace:LibraryManagementApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
         
+        <!--Ajout des fonts family-->
+        <FontFamily x:Key="RobotoRegular">./Assets/Fonts/Roboto/Roboto-Regular.ttf#Roboto</FontFamily>
+        <FontFamily x:Key="RobotoBold">./Assets/Fonts/Roboto/Roboto-Bold.ttf#Roboto</FontFamily>
+        <FontFamily x:Key="RobotoItalic">./Assets/Fonts/Roboto/Roboto-Italic.ttf#Roboto</FontFamily>
+        <FontFamily x:Key="RobotoBoldItalic">./Assets/Fonts/Roboto/Roboto-BoldItalic.ttf#Roboto</FontFamily>
+        <FontFamily x:Key="RobotoThin">./Assets/Fonts/Roboto/Roboto-Thin.ttf#Roboto</FontFamily>
+
+
         <!--Dégradé pour arrière plan-->
         <!-- Dégradé circulaire pour arrière-plan -->
-        <RadialGradientBrush x:Key="BackgroundGradient" x:Name="BackgroundGradient" GradientOrigin="0,0" Center="0,1" RadiusX="1" RadiusY="1">
-            <GradientStop Color="#004aad" Offset="0" />
-            <GradientStop Color="#5de0e6" Offset="0.7" />
+        <RadialGradientBrush x:Key="BackgroundGradient" x:Name="BackgroundGradient" GradientOrigin="0,0" Center="0,0" RadiusX="1" RadiusY="1">
+            <GradientStop Color="#5de0e6" Offset="0" />
+            <GradientStop Color="#004aad" Offset="0.7" />
         </RadialGradientBrush>
 
         <!--#3498DB
@@ -21,11 +28,11 @@
              <!--Animation sur RadiusX--> 
             <DoubleAnimation Storyboard.TargetName="BackgroundGradient"
                              Storyboard.TargetProperty="RadiusX"
-                             From="1" To="0.5" Duration="0:0:2" AutoReverse="True" RepeatBehavior="Forever" />
+                             From="1" To="1.5" Duration="0:0:5" AutoReverse="True" RepeatBehavior="Forever" />
              <!--Animation sur RadiusY--> 
             <DoubleAnimation Storyboard.TargetName="BackgroundGradient"
                              Storyboard.TargetProperty="RadiusY"
-                             From="1" To="0.23" Duration="0:0:2" AutoReverse="True" RepeatBehavior="Forever" />
+                             From="1" To="1.25" Duration="0:0:5" AutoReverse="True" RepeatBehavior="Forever" />
         </Storyboard>
 
          <!--Style global pour appliquer le Background et démarrer l'animation--> 
