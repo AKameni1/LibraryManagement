@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -30,20 +31,16 @@ namespace LibraryManagementApp
             ToggleView(false); // false pour afficher la vue d'inscription
         }
 
-
         private void SignIn_Click(object sender, MouseButtonEventArgs e)
         {
             ToggleView(true); // true pour afficher la vue de connexion
         }
 
-
         private void ToggleView(bool isSignIn)
         {
-            // Préparez les Storyboards pour l'animation
             var fadeOutStoryboard = new Storyboard();
             var fadeInStoryboard = new Storyboard();
 
-            // Animation pour la vue actuelle (SignIn ou SignUp)
             DoubleAnimation fadeOutAnimation = new()
             {
                 From = 1.0,
@@ -52,7 +49,6 @@ namespace LibraryManagementApp
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            // Déterminez quel panneau est visible et doit s'estomper
             var panelToFadeOut = isSignIn ? SignUpPanel : SignInPanel;
             Storyboard.SetTarget(fadeOutAnimation, panelToFadeOut);
             Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath("Opacity"));
@@ -61,14 +57,11 @@ namespace LibraryManagementApp
 
             fadeOutStoryboard.Completed += (s, e) =>
             {
-                // Changer la visibilité une fois l'animation terminée
                 panelToFadeOut.Visibility = Visibility.Collapsed;
 
-                // Déterminer quel panneau doit apparaître
                 var panelToFadeIn = isSignIn ? SignInPanel : SignUpPanel;
                 panelToFadeIn.Visibility = Visibility.Visible;
 
-                // Animation pour la vue suivante
                 DoubleAnimation fadeInAnimation = new()
                 {
                     From = 0.0,
@@ -102,7 +95,6 @@ namespace LibraryManagementApp
             TogglePasswordVisibilityFunction(ConfirmPasswordBox, ConfirmPasswordTextBox, ToggleConfirmPasswordVisibility, "ConfirmPasswordEyeIcon");
         }
 
-
         private static void TogglePasswordVisibilityFunction(PasswordBox passwordBox, TextBox textBox, ToggleButton toggleButton, string iconName)
         {
             if (toggleButton.Template.FindName(iconName, toggleButton) is PackIconMaterial icon)
@@ -124,13 +116,98 @@ namespace LibraryManagementApp
             }
         }
 
-        private void ShowError(string message, TextBlock errorTextBlock, Border errorBorder)
+        private void ForgotPassword_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchToPanel(ResetPasswordPanel);
+        }
+
+        private void ForgotUsername_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SwitchToPanel(ResetUsernamePanel);
+        }
+
+        private void SignIn(object sender, MouseButtonEventArgs e)
+        {
+            // Déterminez le panneau courant
+            var currentPanel = SignInPanel.Visibility == Visibility.Visible ? SignInPanel :
+                               SignUpPanel.Visibility == Visibility.Visible ? SignUpPanel :
+                               ResetPasswordPanel.Visibility == Visibility.Visible ? ResetPasswordPanel : ResetUsernamePanel;
+
+            // Créez une animation d'opacité pour la fermeture progressive
+            var fadeOutAnimation = new DoubleAnimation
+            {
+                From = 1, // Opacité initiale
+                To = 0,   // Opacité finale
+                Duration = TimeSpan.FromMilliseconds(300) // Durée de l'animation
+            };
+
+            // Gérer l'événement Completed de l'animation
+            fadeOutAnimation.Completed += (s, args) =>
+            {
+                currentPanel.Visibility = Visibility.Collapsed; // Masquer le panneau
+                SignIn_Click(sender, e); // Appeler la méthode de connexion
+            };
+
+            // Appliquer l'animation d'opacité au panneau courant
+            currentPanel.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+        }
+
+
+        private void SwitchToPanel(Panel panelToShow)
+        {
+            var currentPanel = SignInPanel.Visibility == Visibility.Visible ? SignInPanel :
+                                SignUpPanel.Visibility == Visibility.Visible ? SignUpPanel :
+                                ResetPasswordPanel.Visibility == Visibility.Visible ? ResetPasswordPanel : ResetUsernamePanel;
+
+            if (currentPanel != panelToShow)
+            {
+                DoubleAnimation slideOutAnimation = new()
+                {
+                    From = 1,
+                    To = 0,
+                    Duration = TimeSpan.FromMilliseconds(300),
+                    FillBehavior = FillBehavior.HoldEnd
+                };
+
+                slideOutAnimation.Completed += (s, a) =>
+                {
+                    currentPanel.Visibility = Visibility.Collapsed;
+                    panelToShow.Visibility = Visibility.Visible;
+                    panelToShow.Opacity = 1;
+
+                    DoubleAnimation slideInAnimation = new()
+                    {
+                        From = 0,
+                        To = 1,
+                        Duration = TimeSpan.FromMilliseconds(300),
+                        FillBehavior = FillBehavior.HoldEnd
+                    };
+
+                    panelToShow.BeginAnimation(OpacityProperty, slideInAnimation);
+                };
+
+                currentPanel.BeginAnimation(OpacityProperty, slideOutAnimation);
+            }
+        }
+
+        private void ResetPasswordButton_Click(object sender, RoutedEventArgs e)
+        {
+            _ = ResetEmailTextBox.Text;
+            // Ajouter votre logique de réinitialisation ici
+        }
+
+        private void ResetUsernameButton_Click(object sender, RoutedEventArgs e)
+        {
+            _ = ResetUsernameEmailTextBox.Text;
+            // Ajouter votre logique de réinitialisation ici
+        }
+
+        private static void ShowError(string message, TextBlock errorTextBlock, Border errorBorder)
         {
             errorTextBlock.Text = message;
             errorTextBlock.Visibility = Visibility.Visible;
             errorBorder.Visibility = Visibility.Visible;
 
-            // Animation (par exemple, faire apparaître progressivement)
             var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(300));
             errorTextBlock.BeginAnimation(OpacityProperty, fadeInAnimation);
         }
@@ -138,22 +215,22 @@ namespace LibraryManagementApp
         private void ClearErrors()
         {
             var errorTextBlocks = new[]
-            {
-                UsernameErrorTextBlock,
-                PasswordErrorTextBlock,
-                SignUpUsernameErrorTextBlock,
-                SignUpPasswordErrorTextBlock,
-                ConfirmPasswordErrorTextBlock
-            };
+                {
+                    UsernameErrorTextBlock,
+                    PasswordErrorTextBlock,
+                    SignUpUsernameErrorTextBlock,
+                    SignUpPasswordErrorTextBlock,
+                    ConfirmPasswordErrorTextBlock
+                };
 
             var errorBorders = new[]
-            {
-                UsernameErrorBorder,
-                PasswordErrorBorder,
-                SignUpUsernameErrorBorder,
-                SignUpPasswordErrorBorder,
-                ConfirmPasswordErrorBorder
-            };
+                    {
+                        UsernameErrorBorder,
+                        PasswordErrorBorder,
+                        SignUpUsernameErrorBorder,
+                        SignUpPasswordErrorBorder,
+                        ConfirmPasswordErrorBorder
+                    };
 
             foreach (var textBlock in errorTextBlocks)
             {
@@ -166,10 +243,9 @@ namespace LibraryManagementApp
             }
         }
 
-        // Modifie la méthode SignInButton_Click
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
-            ClearErrors(); // Réinitialiser les messages d'erreur
+            ClearErrors();
 
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
@@ -179,11 +255,9 @@ namespace LibraryManagementApp
                 return;
             }
 
-            // Connexion réussie
             MessageBox.Show("Connexion réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        // Validation pour le panneau de connexion
         private bool ValidateSignInForm(string username, string password)
         {
             bool isValid = true;
@@ -203,73 +277,76 @@ namespace LibraryManagementApp
             return isValid;
         }
 
-        // Modifie la méthode SignUpButton_Click
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérer les valeurs saisies
             string username = SignUpUsernameTextBox.Text.Trim();
+            string email = SignUpEmailTextBox.Text.Trim();
             string password = SignUpPasswordBox.Password.Trim();
             string confirmPassword = ConfirmPasswordBox.Password.Trim();
 
-            // Réinitialiser les messages d'erreur
-            ClearErrors();
+            ClearErrors(); // Méthode pour effacer les erreurs précédentes
 
-            // Valider le formulaire
-            var errors = ValidateSignUpForm(username, password, confirmPassword);
+            var errors = ValidateSignUpForm(username, email, password, confirmPassword);
 
-            // Afficher les erreurs si présentes
             if (errors.Count > 0)
             {
-                ShowErrors(errors);
+                ShowErrors(errors); // Appeler la nouvelle méthode ShowErrors
                 return;
             }
 
-            // Inscription réussie
             MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private Dictionary<string, string> ValidateSignUpForm(string username, string password, string confirmPassword)
+
+        private Dictionary<string, string> ValidateSignUpForm(string username, string email, string password, string confirmPassword)
         {
             var errors = new Dictionary<string, string>();
 
-            // Vérifications pour chaque champ
             if (string.IsNullOrWhiteSpace(username))
             {
-                errors[nameof(SignUpUsernameErrorTextBlock)] = "Le nom d'utilisateur ne peut pas être vide.";
+                errors.Add("SignUpUsernameErrorTextBlock", "Le nom d'utilisateur ne peut pas être vide.");
+            }
+
+            if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
+            {
+                errors.Add("SignUpEmailErrorTextBlock", "Adresse e-mail invalide.");
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                errors[nameof(SignUpPasswordErrorTextBlock)] = "Le mot de passe ne peut pas être vide.";
-            }
-            else if (password.Length < 6) // Exemple de vérification de longueur
-            {
-                errors[nameof(SignUpPasswordErrorTextBlock)] = "Le mot de passe doit contenir au moins 6 caractères.";
+                errors.Add("SignUpPasswordErrorTextBlock", "Le mot de passe ne peut pas être vide.");
             }
 
             if (password != confirmPassword)
             {
-                errors[nameof(ConfirmPasswordErrorTextBlock)] = "Les mots de passe ne correspondent pas.";
+                errors.Add("ConfirmPasswordErrorTextBlock", "Les mots de passe ne correspondent pas.");
             }
 
             return errors;
+        }
+
+
+        private static bool IsValidEmail(string email)
+        {
+            // Utiliser une expression régulière pour valider l'adresse e-mail
+            var emailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+            return emailRegex.IsMatch(email);
         }
 
         private void ShowErrors(Dictionary<string, string> errors)
         {
             foreach (var error in errors)
             {
-                string errorTextBlockName = error.Key;
-                string errorMessage = error.Value;
+                string errorTextBlockName = error.Key; // Nom du TextBlock d'erreur
+                string errorMessage = error.Value; // Message d'erreur
 
-                // Récupérer le TextBlock et la bordure d'erreur correspondants
+                // Trouver le TextBlock d'erreur correspondant
                 var errorTextBlock = (TextBlock)FindName(errorTextBlockName);
-                var errorBorderName = errorTextBlockName.Replace("ErrorTextBlock", "ErrorBorder");
-                var errorBorder = (Border)FindName(errorBorderName);
+                var errorBorderName = errorTextBlockName.Replace("ErrorTextBlock", "ErrorBorder"); // Nom du Border d'erreur
+                var errorBorder = (Border)FindName(errorBorderName); // Trouver le Border d'erreur correspondant
 
-                ShowError(errorMessage, errorTextBlock, errorBorder);
+                ShowError(errorMessage, errorTextBlock, errorBorder); // Appeler la méthode ShowError
             }
         }
-
     }
 }
