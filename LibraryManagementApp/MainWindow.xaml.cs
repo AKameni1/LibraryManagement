@@ -88,132 +88,86 @@ namespace LibraryManagementApp
             fadeOutStoryboard.Begin();
         }
 
-
-
         private void TogglePasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
-            if (TogglePasswordVisibility.Template.FindName("EyeIcon", TogglePasswordVisibility) is PackIconMaterial EyeIcon)
-            {
-                if (TogglePasswordVisibility.IsChecked == true)
-                {
-                    // Change l'icône pour afficher le mot de passe
-                    EyeIcon.Kind = PackIconMaterialKind.Eye;
-
-                    // Affiche le mot de passe en clair et masque le PasswordBox
-                    PasswordTextBox.Visibility = Visibility.Visible;
-                    PasswordBox.Visibility = Visibility.Collapsed;
-
-                    // Copie le mot de passe du PasswordBox au TextBox
-                    PasswordTextBox.Text = PasswordBox.Password;
-                }
-                else
-                {
-                    // Change l'icône pour masquer le mot de passe
-                    EyeIcon.Kind = PackIconMaterialKind.EyeOff;
-
-                    // Masque le TextBox et affiche le PasswordBox
-                    PasswordTextBox.Visibility = Visibility.Collapsed;
-                    PasswordBox.Visibility = Visibility.Visible;
-
-                    // Copie le mot de passe du TextBox au PasswordBox
-                    PasswordBox.Password = PasswordTextBox.Text;
-                }
-            }
+            TogglePasswordVisibilityFunction(PasswordBox, PasswordTextBox, TogglePasswordVisibility, "EyeIcon");
         }
 
         private void ToggleSignUpPasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
-            if (ToggleSignUpPasswordVisibility.Template.FindName("SignUpEyeIcon", ToggleSignUpPasswordVisibility) is PackIconMaterial SignUpEyeIcon)
-            {
-                if (ToggleSignUpPasswordVisibility.IsChecked == true)
-                {
-                    // Change l'icône pour afficher le mot de passe
-                    SignUpEyeIcon.Kind = PackIconMaterialKind.Eye;
-
-                    // Affiche le mot de passe en clair et masque le PasswordBox
-                    SignUpPasswordTextBox.Visibility = Visibility.Visible;
-                    SignUpPasswordBox.Visibility = Visibility.Collapsed;
-
-                    // Copie le mot de passe du PasswordBox au TextBox
-                    SignUpPasswordTextBox.Text = SignUpPasswordBox.Password;
-                }
-                else
-                {
-                    // Change l'icône pour masquer le mot de passe
-                    SignUpEyeIcon.Kind = PackIconMaterialKind.EyeOff;
-
-                    // Masque le TextBox et affiche le PasswordBox
-                    SignUpPasswordTextBox.Visibility = Visibility.Collapsed;
-                    SignUpPasswordBox.Visibility = Visibility.Visible;
-
-                    // Copie le mot de passe du TextBox au PasswordBox
-                    SignUpPasswordBox.Password = SignUpPasswordTextBox.Text;
-                }
-            }
+            TogglePasswordVisibilityFunction(SignUpPasswordBox, SignUpPasswordTextBox, ToggleSignUpPasswordVisibility, "SignUpEyeIcon");
         }
-
 
         private void ToggleConfirmPasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
-            if (ToggleConfirmPasswordVisibility.Template.FindName("ConfirmPasswordEyeIcon", ToggleConfirmPasswordVisibility) is PackIconMaterial ConfirmPasswordEyeIcon)
+            TogglePasswordVisibilityFunction(ConfirmPasswordBox, ConfirmPasswordTextBox, ToggleConfirmPasswordVisibility, "ConfirmPasswordEyeIcon");
+        }
+
+
+        private static void TogglePasswordVisibilityFunction(PasswordBox passwordBox, TextBox textBox, ToggleButton toggleButton, string iconName)
+        {
+            if (toggleButton.Template.FindName(iconName, toggleButton) is PackIconMaterial icon)
             {
-                if (ToggleConfirmPasswordVisibility.IsChecked == true)
+                if (toggleButton.IsChecked == true)
                 {
-                    // Change l'icône pour afficher le mot de passe
-                    ConfirmPasswordEyeIcon.Kind = PackIconMaterialKind.Eye;
-
-                    // Affiche le mot de passe en clair et masque le PasswordBox
-                    ConfirmPasswordTextBox.Visibility = Visibility.Visible;
-                    ConfirmPasswordBox.Visibility = Visibility.Collapsed;
-
-                    // Copie le mot de passe du PasswordBox au TextBox
-                    ConfirmPasswordTextBox.Text = ConfirmPasswordBox.Password;
+                    icon.Kind = PackIconMaterialKind.Eye;
+                    textBox.Visibility = Visibility.Visible;
+                    passwordBox.Visibility = Visibility.Collapsed;
+                    textBox.Text = passwordBox.Password;
                 }
                 else
                 {
-                    // Change l'icône pour masquer le mot de passe
-                    ConfirmPasswordEyeIcon.Kind = PackIconMaterialKind.EyeOff;
-
-                    // Masque le TextBox et affiche le PasswordBox
-                    ConfirmPasswordTextBox.Visibility = Visibility.Collapsed;
-                    ConfirmPasswordBox.Visibility = Visibility.Visible;
-
-                    // Copie le mot de passe du TextBox au PasswordBox
-                    ConfirmPasswordBox.Password = ConfirmPasswordTextBox.Text;
+                    icon.Kind = PackIconMaterialKind.EyeOff;
+                    textBox.Visibility = Visibility.Collapsed;
+                    passwordBox.Visibility = Visibility.Visible;
+                    passwordBox.Password = textBox.Text;
                 }
             }
         }
 
+
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            // Récupérer les valeurs des champs
             string username = SignUpUsernameTextBox.Text;
             string password = SignUpPasswordBox.Password;
             string confirmPassword = ConfirmPasswordBox.Password;
 
-            // Validation des entrées
+            if (!ValidateSignUpForm(username, password, confirmPassword))
+            {
+                return;
+            }
+
+            // Inscription réussie
+            MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+
+        private static bool ValidateSignUpForm(string username, string password, string confirmPassword)
+        {
             if (string.IsNullOrWhiteSpace(username))
             {
-                MessageBox.Show("Le nom d'utilisateur ne peut pas être vide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                ShowError("Le nom d'utilisateur ne peut pas être vide.");
+                return false;
             }
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show("Le mot de passe ne peut pas être vide.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                ShowError("Le mot de passe ne peut pas être vide.");
+                return false;
             }
 
             if (password != confirmPassword)
             {
-                MessageBox.Show("Les mots de passe ne correspondent pas.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                ShowError("Les mots de passe ne correspondent pas.");
+                return false;
             }
 
-            // Si toutes les validations passent, procéder à l'inscription
-            // (ajouter votre logique d'inscription ici, comme l'enregistrement dans une base de données)
+            return true;
+        }
 
-            MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+        private static void ShowError(string message)
+        {
+            MessageBox.Show(message, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
     }
