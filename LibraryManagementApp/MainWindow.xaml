@@ -194,7 +194,21 @@
                Margin="0,10,0,0" 
                TextWrapping="Wrap"
                MaxWidth="300"/>
+
+            <!-- Options de récupération -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,100,0,0">
+                <TextBlock Text="Mot de passe oublié ?" 
+                   Style="{StaticResource LinkTextStyle}"
+                   />
+                <TextBlock Text=" | " Foreground="LightGray" />
+                <TextBlock Text="Nom d'utilisateur oublié ?" 
+                   Style="{StaticResource LinkTextStyle}"
+                   />
+            </StackPanel>
         </StackPanel>
 
     </Grid>
 </Window>
+
+<!--MouseDown="ForgotUsername_MouseDown"
+    MouseDown="ForgotPassword_MouseDown"-->
