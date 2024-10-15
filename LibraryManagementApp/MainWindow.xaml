@@ -19,7 +19,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid x:Name="MainGrid">
+        <Grid x:Name="MainGrid" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
@@ -170,5 +170,31 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0" Grid.Column="1">
+            <!-- Logo -->
+            <Image Source="Assets/Images/default.png" Width="200" Height="200" HorizontalAlignment="Center" Opacity="0">
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Image.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+
+            <!-- Introduction -->
+            <TextBlock Text="Bienvenue dans notre application de gestion de bibliothèque. Veuillez vous connecter ou vous inscrire pour continuer." 
+               TextAlignment="Center" 
+               FontSize="14"
+               FontFamily="{StaticResource RobotoThin}"
+               Foreground="LightGray" 
+               Margin="0,10,0,0" 
+               TextWrapping="Wrap"
+               MaxWidth="300"/>
+        </StackPanel>
+
     </Grid>
 </Window>
