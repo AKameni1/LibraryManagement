@@ -11,9 +11,24 @@
 
     <!--Dégradé circulaire pour l'arrière-plan-->
     <RadialGradientBrush x:Key="BackgroundGradient" GradientOrigin="0,0" Center="0,0" RadiusX="1" RadiusY="1">
-        <GradientStop Color="#5DE0E6" Offset="0" />
-        <GradientStop Color="#004AAD" Offset="0.8" />
+        <GradientStop Color="#5DE0E6" Offset="0" x:Name="GradientStop1" />
+        <GradientStop Color="#004AAD" Offset="0.8" x:Name="GradientStop2" />
     </RadialGradientBrush>
+
+    <Style x:Key="Background" TargetType="Window">
+        <Setter Property="Background" Value="{StaticResource BackgroundGradient}"/>
+    </Style>
+
+    <Storyboard x:Key="BackgroundAnimation" RepeatBehavior="Forever">
+        <ColorAnimation 
+            Storyboard.TargetName="GradientStop1" 
+            Storyboard.TargetProperty="Color" 
+            From="#5DE0E6" To="#A3D5D7" Duration="0:0:3" AutoReverse="True"/>
+        <ColorAnimation 
+            Storyboard.TargetName="GradientStop2" 
+            Storyboard.TargetProperty="Color" 
+            From="#004AAD" To="#001D6E" Duration="0:0:3" AutoReverse="True" />
+    </Storyboard>
 
     <!--Style global des messages d'erreur-->
     <Style x:Key="ErrorTextStyle" TargetType="TextBlock">

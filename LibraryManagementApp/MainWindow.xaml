@@ -11,7 +11,7 @@
         Height="700"
         Width="800"
         ResizeMode="NoResize"
-        Background="{StaticResource BackgroundGradient}">
+        Style="{StaticResource Background}">
 
     <!-- Main Layout -->
     <Grid Margin="20">
@@ -84,7 +84,7 @@
                 </StackPanel>
             </StackPanel>
 
-            
+
             <!-- SignUp View -->
             <StackPanel x:Name="SignUpPanel" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
                 <TextBlock Text="Inscription" Style="{StaticResource TitleTextStyle}" Margin="0,0,0,20"/>
@@ -275,6 +275,3 @@
 
     </Grid>
 </Window>
-
-<!--MouseDown="ForgotUsername_MouseDown"
-    MouseDown="ForgotPassword_MouseDown"-->
