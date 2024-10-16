@@ -217,7 +217,9 @@ namespace LibraryManagementApp
                     PasswordErrorTextBlock,
                     SignUpUsernameErrorTextBlock,
                     SignUpPasswordErrorTextBlock,
-                    ConfirmPasswordErrorTextBlock
+                    ConfirmPasswordErrorTextBlock,
+                    ResetEmailErrorTextBlock,
+                    ResetUsernameEmailErrorTextBlock
                 };
 
             var errorBorders = new[]
@@ -226,7 +228,9 @@ namespace LibraryManagementApp
                         PasswordErrorBorder,
                         SignUpUsernameErrorBorder,
                         SignUpPasswordErrorBorder,
-                        ConfirmPasswordErrorBorder
+                        ConfirmPasswordErrorBorder,
+                        ResetEmailErrorBorder,
+                        ResetUsernameEmailErrorBorder
                     };
 
             foreach (var textBlock in errorTextBlocks)
@@ -253,6 +257,55 @@ namespace LibraryManagementApp
             }
 
             MessageBox.Show("Connexion réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private static bool ValidateResetForm(string email, TextBlock textBlock, Border border)
+        {
+            bool isValid = true;
+
+            if (!IsValidEmail(email) || string.IsNullOrEmpty(email))
+            {
+                ShowError("Adresse e-mail invalide.", textBlock, border);
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClearErrors();
+            Button clickedButton = (Button)sender;
+            string parentName = "";
+            var parent = VisualTreeHelper.GetParent(clickedButton); 
+
+            if (parent is StackPanel stackPanelParent)
+            {
+                parentName = stackPanelParent.Name;
+            }
+
+            if (parentName == "ResetPasswordPanel")
+            {
+                string email = ResetEmailTextBox.Text;
+
+                if (!ValidateResetForm(email, ResetEmailErrorTextBlock, ResetEmailErrorBorder))
+                {
+                    return;
+                }
+
+                MessageBox.Show("Adresse email valide!", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                string email = ResetUsernameEmailTextBox.Text;
+
+                if (!ValidateResetForm(email, ResetUsernameEmailErrorTextBlock, ResetUsernameEmailErrorBorder))
+                {
+                    return;
+                }
+
+                MessageBox.Show("Adresse email valide!", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private bool ValidateSignInForm(string username, string password)
@@ -295,7 +348,7 @@ namespace LibraryManagementApp
         }
 
 
-        private Dictionary<string, string> ValidateSignUpForm(string username, string email, string password, string confirmPassword)
+        private static Dictionary<string, string> ValidateSignUpForm(string username, string email, string password, string confirmPassword)
         {
             var errors = new Dictionary<string, string>();
 

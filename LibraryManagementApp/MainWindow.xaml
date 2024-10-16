@@ -204,7 +204,7 @@
                     </Border>
                 </StackPanel>
 
-                <Button Content="Réinitialiser le mot de passe" Style="{StaticResource LoginButtonStyle}" Click="ResetPasswordButton_Click"/>
+                <Button Content="Réinitialiser le mot de passe" Style="{StaticResource LoginButtonStyle}" Click="ResetButton_Click"/>
 
                 <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
                     <TextBlock Text="Déjà un compte?" Style="{StaticResource SecondaryTextStyle}"/>
@@ -227,7 +227,7 @@
                     </Border>
                 </StackPanel>
 
-                <Button Content="Réinitialiser le nom d'utilisateur" Style="{StaticResource LoginButtonStyle}" Click="ResetUsernameButton_Click"/>
+                <Button Content="Réinitialiser le nom d'utilisateur" Style="{StaticResource LoginButtonStyle}" Click="ResetButton_Click"/>
 
                 <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
                     <TextBlock Text="Déjà un compte?" Style="{StaticResource SecondaryTextStyle}"/>
