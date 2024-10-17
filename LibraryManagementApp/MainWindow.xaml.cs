@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Arthur_Jayson_UA2;
 using MahApps.Metro.IconPacks;
 
 namespace LibraryManagementApp
@@ -21,11 +22,30 @@ namespace LibraryManagementApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public UIElementCollection? child;
         public MainWindow() => InitializeComponent();
+
+        private void SignInTransition_Completed(object sender, EventArgs e)
+        {
+            // Hide the UsernameResetControl after the fade-out animation
+            ResetUsernamePanel.Visibility = Visibility.Collapsed;
+            ResetPasswordPanel.Visibility = Visibility.Collapsed;
+            
+            // Make sure SignInPanel is visible
+            SignInPanel.Visibility = Visibility.Visible;
+            ResetFields();
+        }
+
+        private void SignIn_Completed(object sender, EventArgs e)
+        {
+            SignUpPanel.Visibility = Visibility.Collapsed;
+            SignInPanel.Visibility = Visibility.Visible;
+        }
 
         private void SignUp_Click(object sender, MouseButtonEventArgs e)
         {
             ToggleView(false); // false pour afficher la vue d'inscription
+            ResetFields();
         }
 
         private void SignIn_Click(object sender, MouseButtonEventArgs e)
@@ -114,13 +134,15 @@ namespace LibraryManagementApp
         }
 
         private void ForgotPassword_MouseDown(object sender, MouseButtonEventArgs e)
-        {
+        {            
             SwitchToPanel(ResetPasswordPanel);
+            ResetFields();
         }
 
         private void ForgotUsername_MouseDown(object sender, MouseButtonEventArgs e)
         {
             SwitchToPanel(ResetUsernamePanel);
+            ResetFields();
         }
 
         private void SignIn(object sender, MouseButtonEventArgs e)
@@ -246,6 +268,7 @@ namespace LibraryManagementApp
 
         private void SignInButton_Click(object sender, RoutedEventArgs e)
         {
+            ResetFields();
             ClearErrors();
 
             string username = UsernameTextBox.Text;
@@ -286,26 +309,31 @@ namespace LibraryManagementApp
 
             if (parentName == "ResetPasswordPanel")
             {
-                string email = ResetEmailTextBox.Text;
+                string email = ResetEmailTextBox.Text.Trim();
 
                 if (!ValidateResetForm(email, ResetEmailErrorTextBlock, ResetEmailErrorBorder))
                 {
                     return;
                 }
+                ResetUsernamePanel.Visibility = Visibility.Collapsed;
+                ResetPasswordPanel.Children.Add(new PasswordResetControl());
 
-                MessageBox.Show("Adresse email valide!", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                string email = ResetUsernameEmailTextBox.Text;
+                string email = ResetUsernameEmailTextBox.Text.Trim();
 
                 if (!ValidateResetForm(email, ResetUsernameEmailErrorTextBlock, ResetUsernameEmailErrorBorder))
                 {
                     return;
                 }
 
-                MessageBox.Show("Adresse email valide!", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+                ResetUsernamePanel.Visibility = Visibility.Collapsed;
+                ResetUsernamePanel.Children.Add(new UsernameResetControl());
+
             }
+
+            ResetFields();
         }
 
         private bool ValidateSignInForm(string username, string password)
@@ -344,7 +372,11 @@ namespace LibraryManagementApp
                 return;
             }
 
-            MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
+            ResetFields();
+            var transitionStoryboard = (Storyboard)Application.Current.MainWindow.FindResource("SignUpToSignIn");
+            transitionStoryboard.Begin();
+
+            //MessageBox.Show("Inscription réussie !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
 
@@ -398,5 +430,41 @@ namespace LibraryManagementApp
                 ShowError(errorMessage, errorTextBlock, errorBorder); // Appeler la méthode ShowError
             }
         }
+
+        private void ResetFields()
+        {
+            // Réinitialiser les champs du SignInPanel
+            UsernameTextBox.Text = string.Empty;
+            PasswordBox.Password = string.Empty;
+
+            // Réinitialiser les erreurs
+            UsernameErrorBorder.Visibility = Visibility.Collapsed;
+            PasswordErrorBorder.Visibility = Visibility.Collapsed;
+
+            // Réinitialiser les champs du SignUpPanel
+            SignUpUsernameTextBox.Text = string.Empty;
+            SignUpEmailTextBox.Text = string.Empty;
+            SignUpPasswordBox.Password = string.Empty;
+            ConfirmPasswordBox.Password = string.Empty;
+
+            // Réinitialiser les erreurs
+            SignUpUsernameErrorBorder.Visibility = Visibility.Collapsed;
+            SignUpEmailErrorBorder.Visibility = Visibility.Collapsed;
+            SignUpPasswordErrorBorder.Visibility = Visibility.Collapsed;
+            ConfirmPasswordErrorBorder.Visibility = Visibility.Collapsed;
+
+            // Réinitialiser les champs du ResetPasswordPanel
+            ResetEmailTextBox.Text = string.Empty;
+            ResetEmailErrorBorder.Visibility = Visibility.Collapsed;
+
+            // Réinitialiser les champs du ResetUsernamePanel
+            ResetUsernameEmailTextBox.Text = string.Empty;
+            ResetUsernameEmailErrorBorder.Visibility = Visibility.Collapsed;
+
+            // Réinitialiser le message de succès
+            //SuccessBorder.Visibility = Visibility.Collapsed;
+            //SuccessMessageTextBlock.Text = string.Empty;
+        }
+
     }
 }

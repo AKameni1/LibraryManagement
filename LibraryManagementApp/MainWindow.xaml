@@ -13,6 +13,45 @@
         ResizeMode="NoResize"
         Style="{StaticResource Background}">
 
+    <Window.Resources>
+        <!-- Animation for transitioning to SignInPanel -->
+        <Storyboard x:Key="TransitionToSignInStoryboard">
+            <DoubleAnimation
+            Storyboard.TargetName="ResetUsernamePanel"
+            Storyboard.TargetProperty="Opacity"
+            From="1.0" To="0.0" Duration="0:0:0.5"
+            Completed="SignInTransition_Completed"/>
+            <DoubleAnimation
+            Storyboard.TargetName="SignInPanel"
+            Storyboard.TargetProperty="Opacity"
+            From="0.0" To="1.0" Duration="0:0:0.5"/>
+        </Storyboard>
+
+        <Storyboard x:Key="TransitionToSignIn">
+            <DoubleAnimation
+                Storyboard.TargetName="ResetPasswordPanel"
+                Storyboard.TargetProperty="Opacity"
+                From="1.0" To="0.0" Duration="0:0:0.5"
+                Completed="SignInTransition_Completed"/>
+            <DoubleAnimation
+                Storyboard.TargetName="SignInPanel"
+                Storyboard.TargetProperty="Opacity"
+                From="0.0" To="1.0" Duration="0:0:0.5"/>
+        </Storyboard>
+
+        <Storyboard x:Key="SignUpToSignIn">
+            <DoubleAnimation
+                Storyboard.TargetName="ResetPasswordPanel"
+                Storyboard.TargetProperty="Opacity"
+                From="1.0" To="0.0" Duration="0:0:5"
+                Completed="SignIn_Completed"/>
+            <DoubleAnimation
+                Storyboard.TargetName="SignInPanel"
+                Storyboard.TargetProperty="Opacity"
+                From="0.0" To="1.0" Duration="0:0:5"/>
+        </Storyboard>
+    </Window.Resources>
+
     <!-- Main Layout -->
     <Grid Margin="20">
         <Grid.ColumnDefinitions>

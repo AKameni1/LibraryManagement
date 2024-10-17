@@ -49,6 +49,26 @@
         <Setter Property="Visibility" Value="Collapsed"/>
     </Style>
 
+    <!--Style global des messages de succès-->
+    <Style x:Key="SuccessTextStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="Green"/>
+        <Setter Property="Margin" Value="0,5,0,0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+
+    <Style TargetType="Border" x:Key="SuccessBorderStyle">
+        <Setter Property="Background" Value="LightGreen"/>
+        <Setter Property="BorderBrush" Value="Green"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Margin" Value="0,5,0,0"/>
+        <Setter Property="Visibility" Value="Collapsed"/>
+    </Style>
+
+
     <!-- Style for buttons with a 3D effect -->
     <Style x:Key="LoginButtonStyle" TargetType="Button">
         <Setter Property="Background">
