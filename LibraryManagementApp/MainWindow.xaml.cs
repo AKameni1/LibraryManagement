@@ -22,7 +22,11 @@ namespace LibraryManagementApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public UIElementCollection? child;
+        private int nbChildResetPassword;
+        private int nbChildResetUsername;
+        public int NbChildResetPassword { get => nbChildResetPassword; set => nbChildResetPassword = ResetPasswordPanel.Children.Count; }
+        public int NbChildResetUsername { get => nbChildResetUsername; set => nbChildResetUsername = ResetUsernamePanel.Children.Count; }
+
         public MainWindow() => InitializeComponent();
 
         private void SignInTransition_Completed(object sender, EventArgs e)
@@ -134,13 +138,14 @@ namespace LibraryManagementApp
         }
 
         private void ForgotPassword_MouseDown(object sender, MouseButtonEventArgs e)
-        {            
+        {
             SwitchToPanel(ResetPasswordPanel);
             ResetFields();
         }
 
         private void ForgotUsername_MouseDown(object sender, MouseButtonEventArgs e)
         {
+
             SwitchToPanel(ResetUsernamePanel);
             ResetFields();
         }
@@ -297,6 +302,7 @@ namespace LibraryManagementApp
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
+            
             ClearErrors();
             Button clickedButton = (Button)sender;
             string parentName = "";
@@ -307,7 +313,7 @@ namespace LibraryManagementApp
                 parentName = stackPanelParent.Name;
             }
 
-            if (parentName == "ResetPasswordPanel")
+            if (parentName == "EmailVerificationPasswordPanel")
             {
                 string email = ResetEmailTextBox.Text.Trim();
 
@@ -315,11 +321,34 @@ namespace LibraryManagementApp
                 {
                     return;
                 }
-                ResetUsernamePanel.Visibility = Visibility.Collapsed;
-                ResetPasswordPanel.Children.Add(new PasswordResetControl());
+                // Masquer tous les enfants existants
+                for (int i = 0; i < ResetPasswordPanel.Children.Count; i++)
+                {
+                    ResetPasswordPanel.Children[i].Visibility = Visibility.Collapsed;
+                }
+
+                // Masquer tous les enfants existants
+                for (int i = 0; i < ResetPasswordPanel.Children.Count; i++)
+                {
+                    ResetPasswordPanel.Children[i].Visibility = Visibility.Collapsed;
+                }
+
+                // Ajouter le nouveau contrôle de réinitialisation mais le garder masqué
+                PasswordResetControl passwordResetControl = new PasswordResetControl();
+                passwordResetControl.ResetCompleted += (s, args) =>
+                {
+                    // Afficher un message de succès ou rediriger si nécessaire
+                    RestoreChildrenVisibility(ResetPasswordPanel);
+                };
+
+                ResetPasswordPanel.Children.Add(passwordResetControl);
+
+                // Une fois la vérification réussie, afficher le contrôle
+                passwordResetControl.Visibility = Visibility.Visible;
+
 
             }
-            else
+            else if (parentName == "EmailVerificationUsernamePanel")
             {
                 string email = ResetUsernameEmailTextBox.Text.Trim();
 
@@ -328,13 +357,40 @@ namespace LibraryManagementApp
                     return;
                 }
 
-                ResetUsernamePanel.Visibility = Visibility.Collapsed;
-                ResetUsernamePanel.Children.Add(new UsernameResetControl());
+                // Masquer tous les enfants existants
+                for (int i = 0; i < ResetUsernamePanel.Children.Count; i++)
+                {
+                    ResetUsernamePanel.Children[i].Visibility = Visibility.Collapsed;
+                }
+
+                // Ajouter le nouveau contrôle de réinitialisation mais le garder masqué
+                UsernameResetControl usernameResetControl = new UsernameResetControl();
+                usernameResetControl.ResetCompleted += (s, args) =>
+                {
+                    // Afficher un message de succès ou rediriger si nécessaire
+                    RestoreChildrenVisibility(ResetUsernamePanel);
+                };
+
+                ResetUsernamePanel.Children.Add(usernameResetControl);
+
+                // Une fois la vérification réussie, afficher le contrôle
+                usernameResetControl.Visibility = Visibility.Visible;
 
             }
 
             ResetFields();
         }
+
+        private void RestoreChildrenVisibility(Panel panel)
+        {
+            foreach (var child in panel.Children)
+            {
+                if (child is UIElement uiElement)
+                {
+                    uiElement.Visibility = Visibility.Visible;
+                }
+            }
+        }   
 
         private bool ValidateSignInForm(string username, string password)
         {
@@ -464,7 +520,7 @@ namespace LibraryManagementApp
             // Réinitialiser le message de succès
             //SuccessBorder.Visibility = Visibility.Collapsed;
             //SuccessMessageTextBlock.Text = string.Empty;
-        }
 
+        }
     }
 }

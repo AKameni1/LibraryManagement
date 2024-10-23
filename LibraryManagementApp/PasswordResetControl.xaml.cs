@@ -24,10 +24,7 @@ namespace Arthur_Jayson_UA2
     /// </summary>
     public partial class PasswordResetControl : UserControl
     {
-        public PasswordResetControl()
-        {
-            InitializeComponent();
-        }
+        public PasswordResetControl() => InitializeComponent();
 
         private void ToggleNewPasswordVisibility_Click(object sender, RoutedEventArgs e)
         {
@@ -61,6 +58,7 @@ namespace Arthur_Jayson_UA2
                 }
             }
         }
+        public event EventHandler? ResetCompleted;
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
@@ -107,6 +105,28 @@ namespace Arthur_Jayson_UA2
             if (!hasError)
             {
                 FadeOutAndShowLoginPanel();
+            }
+
+            // Déclencher l'événement ResetCompleted
+            if (!hasError)
+            {
+                // Si tout est bon, afficher le message de succès
+                SuccessMessageTextBlock.Text = "Réinitialisation réussie!";
+                SuccessBorder.Visibility = Visibility.Visible;
+                SuccessMessageTextBlock.Visibility = Visibility.Visible;
+
+                // Déclencher l'événement ResetCompleted
+                ResetCompleted?.Invoke(this, EventArgs.Empty);
+
+                // Réinitialiser le contrôle après une courte attente
+                Task.Delay(1000).ContinueWith(t =>
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        // Ici, tu peux masquer le contrôle
+                        this.Visibility = Visibility.Collapsed;
+                    });
+                });
             }
         }
 

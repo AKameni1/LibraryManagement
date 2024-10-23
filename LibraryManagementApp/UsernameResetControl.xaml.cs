@@ -26,6 +26,8 @@ namespace Arthur_Jayson_UA2
             InitializeComponent();
         }
 
+        public event EventHandler? ResetCompleted;
+
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
             string newUsername = NewUsernameTextBox.Text;
@@ -59,6 +61,27 @@ namespace Arthur_Jayson_UA2
                 var transitionStoryboard = (Storyboard)Application.Current.MainWindow.FindResource("TransitionToSignInStoryboard");
                 transitionStoryboard.Begin();
             }
+
+            //if (!hasError)
+            //{
+            //    // Si tout est bon, afficher le message de succès
+            //    SuccessMessageTextBlock.Text = "Réinitialisation réussie!";
+            //    SuccessBorder.Visibility = Visibility.Visible;
+            //    SuccessMessageTextBlock.Visibility = Visibility.Visible;
+
+            //    // Déclencher l'événement ResetCompleted
+            //    ResetCompleted?.Invoke(this, EventArgs.Empty);
+
+            //    // Réinitialiser le contrôle après une courte attente
+            //    Task.Delay(1000).ContinueWith(t =>
+            //    {
+            //        Dispatcher.Invoke(() =>
+            //        {
+            //            // Ici, tu peux masquer le contrôle
+            //            this.Visibility = Visibility.Collapsed;
+            //        });
+            //    });
+            //}
         }
     }
 }

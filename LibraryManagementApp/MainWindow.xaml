@@ -230,47 +230,51 @@
 
             <!-- Réinitialisation du mot de passe -->
             <StackPanel x:Name="ResetPasswordPanel" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
-                <TextBlock Text="Réinitialisation du mot de passe" Style="{StaticResource TitleTextStyle}" Margin="0,0,0,20" TextAlignment="Center" TextWrapping="Wrap"/>
+                <StackPanel x:Name="EmailVerificationPasswordPanel">
+                    <TextBlock Text="Réinitialisation du mot de passe" Style="{StaticResource TitleTextStyle}" Margin="0,0,0,20" TextAlignment="Center" TextWrapping="Wrap"/>
 
-                <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Entrez votre adresse e-mail" Style="{StaticResource LabelTextStyle}"/>
-                    <Border Style="{StaticResource InputBorderStyle}">
-                        <TextBox x:Name="ResetEmailTextBox" Style="{StaticResource InputTextBoxStyle}"/>
-                    </Border>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Entrez votre adresse e-mail" Style="{StaticResource LabelTextStyle}"/>
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <TextBox x:Name="ResetEmailTextBox" Style="{StaticResource InputTextBoxStyle}"/>
+                        </Border>
 
-                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="ResetEmailErrorBorder" Visibility="Collapsed">
-                        <TextBlock x:Name="ResetEmailErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
-                    </Border>
-                </StackPanel>
+                        <Border Style="{StaticResource ErrorBorderStyle}" x:Name="ResetEmailErrorBorder" Visibility="Collapsed">
+                            <TextBlock x:Name="ResetEmailErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+                        </Border>
+                    </StackPanel>
 
-                <Button Content="Réinitialiser le mot de passe" Style="{StaticResource LoginButtonStyle}" Click="ResetButton_Click"/>
+                    <Button Content="Réinitialiser le mot de passe" Style="{StaticResource LoginButtonStyle}" Click="ResetButton_Click"/>
 
-                <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
-                    <TextBlock Text="Déjà un compte?" Style="{StaticResource SecondaryTextStyle}"/>
-                    <TextBlock Text=" Connectez-vous!" Style="{StaticResource LinkTextStyle}" MouseDown="SignIn"/>
+                    <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
+                        <TextBlock Text="Déjà un compte?" Style="{StaticResource SecondaryTextStyle}"/>
+                        <TextBlock Text=" Connectez-vous!" Style="{StaticResource LinkTextStyle}" MouseDown="SignIn"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
 
             <!-- Réinitialisation du nom d'utilisateur -->
             <StackPanel x:Name="ResetUsernamePanel" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300">
-                <TextBlock Text="Réinitialisation du nom d'utilisateur" Style="{StaticResource TitleTextStyle}" Margin="0,0,0,20"  TextAlignment="Center" TextWrapping="Wrap"/>
+                <StackPanel x:Name="EmailVerificationUsernamePanel">
+                    <TextBlock Text="Réinitialisation du nom d'utilisateur" Style="{StaticResource TitleTextStyle}" Margin="0,0,0,20"  TextAlignment="Center" TextWrapping="Wrap"/>
 
-                <StackPanel Margin="0,0,0,10">
-                    <TextBlock Text="Entrez votre adresse e-mail" Style="{StaticResource LabelTextStyle}"/>
-                    <Border Style="{StaticResource InputBorderStyle}">
-                        <TextBox x:Name="ResetUsernameEmailTextBox" Style="{StaticResource InputTextBoxStyle}"/>
-                    </Border>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Entrez votre adresse e-mail" Style="{StaticResource LabelTextStyle}"/>
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <TextBox x:Name="ResetUsernameEmailTextBox" Style="{StaticResource InputTextBoxStyle}"/>
+                        </Border>
 
-                    <Border Style="{StaticResource ErrorBorderStyle}" x:Name="ResetUsernameEmailErrorBorder" Visibility="Collapsed">
-                        <TextBlock x:Name="ResetUsernameEmailErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
-                    </Border>
-                </StackPanel>
+                        <Border Style="{StaticResource ErrorBorderStyle}" x:Name="ResetUsernameEmailErrorBorder" Visibility="Collapsed">
+                            <TextBlock x:Name="ResetUsernameEmailErrorTextBlock" Style="{StaticResource ErrorTextStyle}" />
+                        </Border>
+                    </StackPanel>
 
-                <Button Content="Réinitialiser le nom d'utilisateur" Style="{StaticResource LoginButtonStyle}" Click="ResetButton_Click"/>
+                    <Button Content="Réinitialiser le nom d'utilisateur" Style="{StaticResource LoginButtonStyle}" Click="ResetButton_Click"/>
 
-                <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
-                    <TextBlock Text="Déjà un compte?" Style="{StaticResource SecondaryTextStyle}"/>
-                    <TextBlock Text=" Connectez-vous!" Style="{StaticResource LinkTextStyle}" MouseDown="SignIn"/>
+                    <StackPanel Orientation="Horizontal" Margin="5,10,5,5">
+                        <TextBlock Text="Déjà un compte?" Style="{StaticResource SecondaryTextStyle}"/>
+                        <TextBlock Text=" Connectez-vous!" Style="{StaticResource LinkTextStyle}" MouseDown="SignIn"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
 
