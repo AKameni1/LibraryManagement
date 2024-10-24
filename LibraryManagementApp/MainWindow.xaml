@@ -68,7 +68,7 @@
             <StackPanel x:Name="SignInPanel" Visibility="Visible" VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
                 <TextBlock Text="Connexion" Style="{StaticResource TitleTextStyle}" Margin="0,0,0,20"/>
 
-                <StackPanel Margin="0,0,0,10">
+                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Nom d'utilisateur" Style="{StaticResource LabelTextStyle}"/>
                     <Border Style="{StaticResource InputBorderStyle}">
                         <Grid>
@@ -99,7 +99,7 @@
                             <Icon:PackIconMaterial Kind="Lock" Style="{StaticResource IconStyle}"/>
                             <PasswordBox x:Name="PasswordBox" Style="{StaticResource InputPasswordBoxStyle}" Grid.Column="1"/>
                             <TextBox x:Name="PasswordTextBox" Style="{StaticResource InputTextBoxStyle}" Visibility="Collapsed" Grid.Column="1"/>
-                            <ToggleButton x:Name="TogglePasswordVisibility" Style="{StaticResource ToggleVisibilityButtonStyle}" Grid.Column="2" Click="TogglePasswordVisibility_Click">
+                            <ToggleButton x:Name="TogglePasswordVisibility" Style="{StaticResource ToggleVisibilityButtonStyle}" Grid.Column="2" Click="TogglePasswordVisibility_Click" HorizontalAlignment="Left">
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="ToggleButton">
                                         <Icon:PackIconMaterial x:Name="EyeIcon" Kind="EyeOff" Style="{StaticResource IconStyle}"/>

@@ -455,9 +455,16 @@ namespace LibraryManagementApp
                 errors.Add("SignUpPasswordErrorTextBlock", "Le mot de passe ne peut pas être vide.");
             }
 
-            if (password != confirmPassword)
+            if (password.Length < 6)
             {
-                errors.Add("ConfirmPasswordErrorTextBlock", "Les mots de passe ne correspondent pas.");
+                errors.Add("SignUpPasswordErrorTextBlock", "Le mot de passe doit contenir au moins 6 caractères.");
+            }
+            else
+            {
+                if (password != confirmPassword)
+                {
+                    errors.Add("ConfirmPasswordErrorTextBlock", "Les mots de passe ne correspondent pas.");
+                }
             }
 
             return errors;

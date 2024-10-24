@@ -198,7 +198,7 @@
 
     <Style x:Key="LinkTextStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Foreground" Value="LightBlue"/>
+        <Setter Property="Foreground" Value="#E2F3F3"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="TextDecorations" Value="Underline"/>
         <Setter Property="FontFamily" Value="{StaticResource RobotoRegular}"/>
